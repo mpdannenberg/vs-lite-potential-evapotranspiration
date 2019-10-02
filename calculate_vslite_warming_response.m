@@ -34,6 +34,7 @@ for i = 1:length(ecoL3)
     end
     
 end
+clear IN ON ecoL3;
 
 %% Get monthly climatology and simulate +2 and +4 C
 
@@ -221,4 +222,6 @@ for i = 1:n
     ITRDB(i).PM.Tplus4.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
 end
+clear coast DistDeg DistKM elev gM i ia ib m M ms mw P PET phi rwi rwi_sim s T Tdmean Tmax Tmin w xind xy yind yr;
+
 
