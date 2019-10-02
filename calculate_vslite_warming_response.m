@@ -339,22 +339,11 @@ b(4).FaceColor = clr(4,:);
 box off;
 set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
 ylabel('\DeltaPET (mm)', 'FontSize',11);
-% title(['+2',char(176),'C'], 'FontSize',12)
 text(5,100,'a', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
 lgd = legend('Thornthwaite','Hargreaves','Priestly-Taylor','Penman-Monteith');
 lgd.Position = [0.5965 0.89 0.2854 0.1068];
 lgd.FontSize = 7;
 legend('boxoff');
-% hold on;
-% ngroups = size(pet_T2_m, 1);
-% nbars = size(pet_T2_m, 2);
-% % Calculating the width for each bar group
-% groupwidth = min(0.8, nbars/(nbars + 1.5));
-% for i = 1:nbars
-%     x = (1:ngroups) - groupwidth/2 + (2*i-1) * groupwidth / (2*nbars);
-%     errorbar(x, pet_T2_m(:,i), 1.96*pet_T2_s(:,i), '.');
-% end
-% hold off
 
 subplot(3,1,2)
 b = bar(ecos,M_T2_m);
@@ -397,22 +386,11 @@ b(4).FaceColor = clr(4,:);
 box off;
 set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
 ylabel('\DeltaPET (mm)', 'FontSize',11);
-% title(['+2',char(176),'C'], 'FontSize',12)
 text(5,200,'a', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
 lgd = legend('Thornthwaite','Hargreaves','Priestly-Taylor','Penman-Monteith');
 lgd.Position = [0.5965 0.89 0.2854 0.1068];
 lgd.FontSize = 7;
 legend('boxoff');
-% hold on;
-% ngroups = size(pet_T4_m, 1);
-% nbars = size(pet_T4_m, 2);
-% % Calculating the width for each bar group
-% groupwidth = min(0.8, nbars/(nbars + 1.5));
-% for i = 1:nbars
-%     x = (1:ngroups) - groupwidth/2 + (2*i-1) * groupwidth / (2*nbars);
-%     errorbar(x, pet_T4_m(:,i), 1.96*pet_T4_s(:,i), '.');
-% end
-% hold off
 
 subplot(3,1,2)
 b = bar(ecos,M_T4_m);
