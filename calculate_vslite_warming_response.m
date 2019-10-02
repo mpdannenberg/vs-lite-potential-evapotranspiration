@@ -222,6 +222,222 @@ for i = 1:n
     ITRDB(i).PM.Tplus4.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
 end
-clear coast DistDeg DistKM elev gM i ia ib m M ms mw P PET phi rwi rwi_sim s T Tdmean Tmax Tmin w xind xy yind yr;
+clear coast DistDeg DistKM elev gM i ia ib m M ms mw n P PET phi rwi rwi_sim s T Tdmean Tmax Tmin w xind xy yind yr;
 
+%% Calculate mean/SE of PET, soil moisture, and gM in each ecoregion
+clr = wesanderson('fantasticfox1');
+idx = ~cellfun(@isempty, {ITRDB.EcoL1_Code});
+
+ITRDB = ITRDB(idx);
+ecol1 = cellfun(@str2num, {ITRDB.EcoL1_Code});
+ecos = sort(unique(ecol1));
+
+pet_T2_m = NaN(length(ecos), 4);
+pet_T2_s = NaN(length(ecos), 4);
+M_T2_m = NaN(length(ecos), 4);
+M_T2_s = NaN(length(ecos), 4);
+gM_T2_m = NaN(length(ecos), 4);
+gM_T2_s = NaN(length(ecos), 4);
+pet_T4_m = NaN(length(ecos), 4);
+pet_T4_s = NaN(length(ecos), 4);
+M_T4_m = NaN(length(ecos), 4);
+M_T4_s = NaN(length(ecos), 4);
+gM_T4_m = NaN(length(ecos), 4);
+gM_T4_s = NaN(length(ecos), 4);
+n = NaN(length(ecos), 1);
+
+for i = 1:length(ecos)
+    
+    ITRDB_sub = ITRDB(ecol1 == ecos(i));
+    n(i) = length(ITRDB_sub);
+    
+    % Thornthwaite
+    model = [ITRDB_sub.Th];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    T4 = [model.Tplus4];
+    pet_T2_m(i, 1) = mean(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T2_s(i, 1) = std(12*[T2.PET] - 12*[T0.PET]) / sqrt(length(model));
+    M_T2_m(i, 1) = mean([T2.M] - [T0.M]);
+    M_T2_s(i, 1) = std([T2.M] - [T0.M]) / sqrt(length(model));
+    gM_T2_m(i, 1) = mean([T2.gM] - [T0.gM]);
+    gM_T2_s(i, 1) = std([T2.gM] - [T0.gM]) / sqrt(length(model));
+    pet_T4_m(i, 1) = mean(12*[T4.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T4_s(i, 1) = std(12*[T4.PET] - 12*[T0.PET]) / sqrt(length(model));
+    M_T4_m(i, 1) = mean([T4.M] - [T0.M]);
+    M_T4_s(i, 1) = std([T4.M] - [T0.M]) / sqrt(length(model));
+    gM_T4_m(i, 1) = mean([T4.gM] - [T0.gM]);
+    gM_T4_s(i, 1) = std([T4.gM] - [T0.gM]) / sqrt(length(model));
+    
+    % Hargreaves
+    model = [ITRDB_sub.Hg];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    T4 = [model.Tplus4];
+    pet_T2_m(i, 2) = mean(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T2_s(i, 2) = std(12*[T2.PET] - 12*[T0.PET]) / sqrt(length(model));
+    M_T2_m(i, 2) = mean([T2.M] - [T0.M]);
+    M_T2_s(i, 2) = std([T2.M] - [T0.M]) / sqrt(length(model));
+    gM_T2_m(i, 2) = mean([T2.gM] - [T0.gM]);
+    gM_T2_s(i, 2) = std([T2.gM] - [T0.gM]) / sqrt(length(model));
+    pet_T4_m(i, 2) = mean(12*[T4.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T4_s(i, 2) = std(12*[T4.PET] - 12*[T0.PET]) / sqrt(length(model));
+    M_T4_m(i, 2) = mean([T4.M] - [T0.M]);
+    M_T4_s(i, 2) = std([T4.M] - [T0.M]) / sqrt(length(model));
+    gM_T4_m(i, 2) = mean([T4.gM] - [T0.gM]);
+    gM_T4_s(i, 2) = std([T4.gM] - [T0.gM]) / sqrt(length(model));
+    
+    % Priestly-Taylor
+    model = [ITRDB_sub.PT];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    T4 = [model.Tplus4];
+    pet_T2_m(i, 3) = mean(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T2_s(i, 3) = std(12*[T2.PET] - 12*[T0.PET]) / sqrt(length(model));
+    M_T2_m(i, 3) = mean([T2.M] - [T0.M]);
+    M_T2_s(i, 3) = std([T2.M] - [T0.M]) / sqrt(length(model));
+    gM_T2_m(i, 3) = mean([T2.gM] - [T0.gM]);
+    gM_T2_s(i, 3) = std([T2.gM] - [T0.gM]) / sqrt(length(model));
+    pet_T4_m(i, 3) = mean(12*[T4.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T4_s(i, 3) = std(12*[T4.PET] - 12*[T0.PET]) / sqrt(length(model));
+    M_T4_m(i, 3) = mean([T4.M] - [T0.M]);
+    M_T4_s(i, 3) = std([T4.M] - [T0.M]) / sqrt(length(model));
+    gM_T4_m(i, 3) = mean([T4.gM] - [T0.gM]);
+    gM_T4_s(i, 3) = std([T4.gM] - [T0.gM]) / sqrt(length(model));
+    
+    % Penman-Monteith
+    model = [ITRDB_sub.PM];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    T4 = [model.Tplus4];
+    pet_T2_m(i, 4) = mean(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T2_s(i, 4) = std(12*[T2.PET] - 12*[T0.PET]) / sqrt(length(model));
+    M_T2_m(i, 4) = mean([T2.M] - [T0.M]);
+    M_T2_s(i, 4) = std([T2.M] - [T0.M]) / sqrt(length(model));
+    gM_T2_m(i, 4) = mean([T2.gM] - [T0.gM]);
+    gM_T2_s(i, 4) = std([T2.gM] - [T0.gM]) / sqrt(length(model));
+    pet_T4_m(i, 4) = mean(12*[T4.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T4_s(i, 4) = std(12*[T4.PET] - 12*[T0.PET]) / sqrt(length(model));
+    M_T4_m(i, 4) = mean([T4.M] - [T0.M]);
+    M_T4_s(i, 4) = std([T4.M] - [T0.M]) / sqrt(length(model));
+    gM_T4_m(i, 4) = mean([T4.gM] - [T0.gM]);
+    gM_T4_s(i, 4) = std([T4.gM] - [T0.gM]) / sqrt(length(model));
+    
+end
+
+%% Bargraph of +2C effect
+h = figure('Color','w');
+h.Units = 'inches';
+h.Position = [1 1 5 6];
+
+subplot(3,1,1)
+b = bar(ecos,pet_T2_m);
+b(1).FaceColor = clr(1,:);
+b(2).FaceColor = clr(2,:);
+b(3).FaceColor = clr(3,:);
+b(4).FaceColor = clr(4,:);
+box off;
+set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
+ylabel('\DeltaPET (mm)', 'FontSize',11);
+% title(['+2',char(176),'C'], 'FontSize',12)
+text(5,100,'a', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
+lgd = legend('Thornthwaite','Hargreaves','Priestly-Taylor','Penman-Monteith');
+lgd.Position = [0.5965 0.89 0.2854 0.1068];
+lgd.FontSize = 7;
+legend('boxoff');
+% hold on;
+% ngroups = size(pet_T2_m, 1);
+% nbars = size(pet_T2_m, 2);
+% % Calculating the width for each bar group
+% groupwidth = min(0.8, nbars/(nbars + 1.5));
+% for i = 1:nbars
+%     x = (1:ngroups) - groupwidth/2 + (2*i-1) * groupwidth / (2*nbars);
+%     errorbar(x, pet_T2_m(:,i), 1.96*pet_T2_s(:,i), '.');
+% end
+% hold off
+
+subplot(3,1,2)
+b = bar(ecos,M_T2_m);
+b(1).FaceColor = clr(1,:);
+b(2).FaceColor = clr(2,:);
+b(3).FaceColor = clr(3,:);
+b(4).FaceColor = clr(4,:);
+box off;
+set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XTickLabels','', 'XAxisLocation','top')
+ylabel('\DeltaSoil moisture (vol/vol)', 'FontSize',11);
+text(5,-0.015,'b', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
+
+subplot(3,1,3)
+b = bar(ecos,gM_T2_m);
+b(1).FaceColor = clr(1,:);
+b(2).FaceColor = clr(2,:);
+b(3).FaceColor = clr(3,:);
+b(4).FaceColor = clr(4,:);
+box off;
+set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','top','XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
+ylabel('\Deltag_{M}', 'FontSize',11);
+text(5,-0.03,'c', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
+text(9,0.01,'Ecoregion','HorizontalAlignment','center', 'FontSize',11);
+
+set(gcf,'PaperPositionMode','auto')
+print('-dtiff','-f1','-r300','./output/vslite-t+2-bars.tif')
+close all;
+
+%% Bargraph of +4C effect
+h = figure('Color','w');
+h.Units = 'inches';
+h.Position = [1 1 5 6];
+
+subplot(3,1,1)
+b = bar(ecos,pet_T4_m);
+b(1).FaceColor = clr(1,:);
+b(2).FaceColor = clr(2,:);
+b(3).FaceColor = clr(3,:);
+b(4).FaceColor = clr(4,:);
+box off;
+set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
+ylabel('\DeltaPET (mm)', 'FontSize',11);
+% title(['+2',char(176),'C'], 'FontSize',12)
+text(5,200,'a', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
+lgd = legend('Thornthwaite','Hargreaves','Priestly-Taylor','Penman-Monteith');
+lgd.Position = [0.5965 0.89 0.2854 0.1068];
+lgd.FontSize = 7;
+legend('boxoff');
+% hold on;
+% ngroups = size(pet_T4_m, 1);
+% nbars = size(pet_T4_m, 2);
+% % Calculating the width for each bar group
+% groupwidth = min(0.8, nbars/(nbars + 1.5));
+% for i = 1:nbars
+%     x = (1:ngroups) - groupwidth/2 + (2*i-1) * groupwidth / (2*nbars);
+%     errorbar(x, pet_T4_m(:,i), 1.96*pet_T4_s(:,i), '.');
+% end
+% hold off
+
+subplot(3,1,2)
+b = bar(ecos,M_T4_m);
+b(1).FaceColor = clr(1,:);
+b(2).FaceColor = clr(2,:);
+b(3).FaceColor = clr(3,:);
+b(4).FaceColor = clr(4,:);
+box off;
+set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XTickLabels','', 'XAxisLocation','top')
+ylabel('\DeltaSoil moisture (vol/vol)', 'FontSize',11);
+text(5,-0.03,'b', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
+
+subplot(3,1,3)
+b = bar(ecos,gM_T4_m);
+b(1).FaceColor = clr(1,:);
+b(2).FaceColor = clr(2,:);
+b(3).FaceColor = clr(3,:);
+b(4).FaceColor = clr(4,:);
+box off;
+set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','top','XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
+ylabel('\Deltag_{M}', 'FontSize',11);
+text(5,-0.06,'c', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
+text(9,0.02,'Ecoregion','HorizontalAlignment','center', 'FontSize',11);
+
+set(gcf,'PaperPositionMode','auto')
+print('-dtiff','-f1','-r300','./output/vslite-t+4-bars.tif')
+close all;
 
