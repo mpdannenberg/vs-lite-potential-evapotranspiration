@@ -34,10 +34,22 @@ h.Position = [1 1 6.5 4];
 
 clr = wesanderson('fantasticfox1');
 
+T = table({'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}',...
+    {'Northern Forests','Northwestern Forested Mountains',...
+    'Marine West Coast Forest','Eastern Temperate Forests','Great Plains',...
+    'North American Deserts','Mediterranean California',...
+    'Southern Semi-Arid Highlands','Temperate Sierras'}', 'VariableNames',{'Code','Name'});
+n = NaN(9,1);
+Th = cell(9,1);
+Hg = cell(9,1);
+PT = cell(9,1);
+PM = cell(9,1);
+
 for i = 1:length(ecos)
     ITRDB_sub = ITRDB(ecol1 == ecos(i));
     subplot(3,3,i)
     x = 0.05:0.1:0.8;
+    n(i) = length(ITRDB_sub);
     
     % Thornthwaite
     r2 = [ITRDB_sub.Th];
@@ -48,6 +60,8 @@ for i = 1:length(ecos)
     scatter(x, f, 20, clr(1,:), 'filled')
     set(gca, 'XLim',[0 0.8], 'XTick',0:0.2:0.8, 'TickDir','out','TickLength',[0.02 0.02])
     box off;
+    ci = bootci(1000,@median,r2);
+    Th{i} = [num2str(round(median(r2),3)),' [',num2str(round(ci(1),3)),', ',num2str(round(ci(2),3)),']'];
 
     % Hargreaves
     r2 = [ITRDB_sub.Hg];
@@ -55,6 +69,8 @@ for i = 1:length(ecos)
     [f] = histcounts(r2, 0:0.1:0.8);
     p2 = plot(x, f, '-', 'Color',clr(2,:), 'LineWidth',2);
     scatter(x, f, 20, clr(2,:), 'filled')
+    ci = bootci(1000,@median,r2);
+    Hg{i} = [num2str(round(median(r2),3)),' [',num2str(round(ci(1),3)),', ',num2str(round(ci(2),3)),']'];
 
     % Priestly-Taylor
     r2 = [ITRDB_sub.PT];
@@ -62,6 +78,8 @@ for i = 1:length(ecos)
     [f] = histcounts(r2, 0:0.1:0.8);
     p3 = plot(x, f, '-', 'Color',clr(3,:), 'LineWidth',2);
     scatter(x, f, 20, clr(3,:), 'filled')
+    ci = bootci(1000,@median,r2);
+    PT{i} = [num2str(round(median(r2),3)),' [',num2str(round(ci(1),3)),', ',num2str(round(ci(2),3)),']'];
 
     % Penman-Monteith
     r2 = [ITRDB_sub.PM];
@@ -69,7 +87,9 @@ for i = 1:length(ecos)
     [f] = histcounts(r2, 0:0.1:0.8);
     p4 = plot(x, f, '-', 'Color',clr(4,:), 'LineWidth',2);
     scatter(x, f, 20, clr(4,:), 'filled')
-    
+    ci = bootci(1000,@median,r2);
+    PM{i} = [num2str(round(median(r2),3)),' [',num2str(round(ci(1),3)),', ',num2str(round(ci(2),3)),']'];
+
     if i == 3
         lgd = legend([p1 p2 p3 p4],'Th','Hg','PT','PM');
         legend('boxoff')
@@ -95,8 +115,15 @@ for i = 1:length(ecos)
 
 end
 
+T.n = n;
+T.Th = Th;
+T.Hg = Hg;
+T.PT = PT;
+T.PM = PM;
+
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/vslite-r2-histogram-byEcoregion.tif')
 close all;
 
-% Make a table of median R2 by ecoregion!
+writetable(T, './output/vslite-r2-median-ci.csv');
+
