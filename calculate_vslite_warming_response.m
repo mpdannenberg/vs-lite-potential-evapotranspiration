@@ -352,7 +352,7 @@ b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XTickLabels','', 'XAxisLocation','top')
+set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'XAxisLocation','top')
 ylabel('\DeltaSoil moisture (vol/vol)', 'FontSize',11);
 text(5,-0.015,'b', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
 
@@ -366,7 +366,7 @@ box off;
 set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','top','XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
 ylabel('\Deltag_{M}', 'FontSize',11);
 text(5,-0.03,'c', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
-text(9,0.01,'Ecoregion','HorizontalAlignment','center', 'FontSize',11);
+text(9,-0.03,'Ecoregion','HorizontalAlignment','center', 'FontSize',11, 'VerticalAlignment','top');
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/vslite-t+2-bars.tif')
@@ -399,7 +399,7 @@ b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XTickLabels','', 'XAxisLocation','top')
+set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'XAxisLocation','top')
 ylabel('\DeltaSoil moisture (vol/vol)', 'FontSize',11);
 text(5,-0.03,'b', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
 
@@ -413,7 +413,7 @@ box off;
 set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','top','XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
 ylabel('\Deltag_{M}', 'FontSize',11);
 text(5,-0.06,'c', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
-text(9,0.02,'Ecoregion','HorizontalAlignment','center', 'FontSize',11);
+text(9,-0.06,'Ecoregion','HorizontalAlignment','center', 'FontSize',11, 'VerticalAlignment','top');
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/vslite-t+4-bars.tif')
