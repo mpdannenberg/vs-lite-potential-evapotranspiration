@@ -13,7 +13,8 @@ h.Position = [1 1 6.5 7];
 lat = [ITRDB.LAT];
 lon = [ITRDB.LON];
 
-clr = cbrewer('seq','PuRd',10);
+clr = wesanderson('fantasticfox1');
+clr = make_cmap([1 1 1; clr(3,:); clr(3,:).^2; clr(3,:).^4], 10);
 
 % Thornthwaite
 r2 = [ITRDB.Th];
@@ -24,14 +25,14 @@ ax = axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'ParallelLabel','off','GLineWidth',0.5,'Frame','off','FFaceColor',...
         'none', 'FontName', 'Helvetica','GColor',[0.6 0.6 0.6],...
         'FLineWidth',1, 'FontColor',[0.5 0.5 0.5], 'MLabelParallel',25.11);
-geoshow(states,'FaceColor',[0.9 0.9 0.9],'EdgeColor',[0.6 0.6 0.6])
+geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
 caxis([0 0.5]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
-text(-0.38,0.86,'A', 'FontSize',12, 'FontWeight','bold')
+text(-0.38,0.86,'a', 'FontSize',12)
 text(-0.46,0.68,'Thornthwaite','FontSize',11,'Rotation',90,...
     'HorizontalAlignment','center', 'VerticalAlignment','middle');
 title('Calibration', 'FontSize',12);
@@ -44,14 +45,14 @@ ax = axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'ParallelLabel','off','GLineWidth',0.5,'Frame','off','FFaceColor',...
         'none', 'FontName', 'Helvetica','GColor',[0.6 0.6 0.6],...
         'FLineWidth',1, 'FontColor',[0.5 0.5 0.5], 'MLabelParallel',25.11);
-geoshow(states,'FaceColor',[0.9 0.9 0.9],'EdgeColor',[0.6 0.6 0.6])
+geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
 caxis([0 0.5]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
-text(-0.38,0.86,'B', 'FontSize',12, 'FontWeight','bold')
+text(-0.38,0.86,'b', 'FontSize',12)
 title('Validation', 'FontSize',12);
 
 % Hargreaves
@@ -63,14 +64,14 @@ ax = axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'ParallelLabel','off','GLineWidth',0.5,'Frame','off','FFaceColor',...
         'none', 'FontName', 'Helvetica','GColor',[0.6 0.6 0.6],...
         'FLineWidth',1, 'FontColor',[0.5 0.5 0.5], 'MLabelParallel',25.11);
-geoshow(states,'FaceColor',[0.9 0.9 0.9],'EdgeColor',[0.6 0.6 0.6])
+geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
 caxis([0 0.5]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
-text(-0.38,0.86,'C', 'FontSize',12, 'FontWeight','bold')
+text(-0.38,0.86,'c', 'FontSize',12)
 text(-0.46,0.68,'Hargreaves','FontSize',11,'Rotation',90,...
     'HorizontalAlignment','center', 'VerticalAlignment','middle');
 
@@ -82,14 +83,14 @@ ax = axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'ParallelLabel','off','GLineWidth',0.5,'Frame','off','FFaceColor',...
         'none', 'FontName', 'Helvetica','GColor',[0.6 0.6 0.6],...
         'FLineWidth',1, 'FontColor',[0.5 0.5 0.5], 'MLabelParallel',25.11);
-geoshow(states,'FaceColor',[0.9 0.9 0.9],'EdgeColor',[0.6 0.6 0.6])
+geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
 caxis([0 0.5]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
-text(-0.38,0.86,'D', 'FontSize',12, 'FontWeight','bold')
+text(-0.38,0.86,'d', 'FontSize',12)
 
 % Priestly-Taylor
 r2 = [ITRDB.PT];
@@ -100,14 +101,14 @@ ax = axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'ParallelLabel','off','GLineWidth',0.5,'Frame','off','FFaceColor',...
         'none', 'FontName', 'Helvetica','GColor',[0.6 0.6 0.6],...
         'FLineWidth',1, 'FontColor',[0.5 0.5 0.5], 'MLabelParallel',25.11);
-geoshow(states,'FaceColor',[0.9 0.9 0.9],'EdgeColor',[0.6 0.6 0.6])
+geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
 caxis([0 0.5]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
-text(-0.38,0.86,'E', 'FontSize',12, 'FontWeight','bold')
+text(-0.38,0.86,'e', 'FontSize',12)
 text(-0.46,0.68,'Priestly-Taylor','FontSize',11,'Rotation',90,...
     'HorizontalAlignment','center', 'VerticalAlignment','middle');
 
@@ -119,14 +120,14 @@ ax = axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'ParallelLabel','off','GLineWidth',0.5,'Frame','off','FFaceColor',...
         'none', 'FontName', 'Helvetica','GColor',[0.6 0.6 0.6],...
         'FLineWidth',1, 'FontColor',[0.5 0.5 0.5], 'MLabelParallel',25.11);
-geoshow(states,'FaceColor',[0.9 0.9 0.9],'EdgeColor',[0.6 0.6 0.6])
+geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
 caxis([0 0.5]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
-text(-0.38,0.86,'F', 'FontSize',12, 'FontWeight','bold')
+text(-0.38,0.86,'f', 'FontSize',12)
 
 % Penman-Monteith
 r2 = [ITRDB.PM];
@@ -137,14 +138,14 @@ ax = axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'ParallelLabel','off','GLineWidth',0.5,'Frame','off','FFaceColor',...
         'none', 'FontName', 'Helvetica','GColor',[0.6 0.6 0.6],...
         'FLineWidth',1, 'FontColor',[0.5 0.5 0.5], 'MLabelParallel',25.11);
-geoshow(states,'FaceColor',[0.9 0.9 0.9],'EdgeColor',[0.6 0.6 0.6])
+geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
 caxis([0 0.5]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
-text(-0.38,0.86,'G', 'FontSize',12, 'FontWeight','bold')
+text(-0.38,0.86,'g', 'FontSize',12)
 text(-0.46,0.68,'Penman-Monteith','FontSize',11,'Rotation',90,...
     'HorizontalAlignment','center', 'VerticalAlignment','middle');
 
@@ -156,18 +157,18 @@ ax = axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'ParallelLabel','off','GLineWidth',0.5,'Frame','off','FFaceColor',...
         'none', 'FontName', 'Helvetica','GColor',[0.6 0.6 0.6],...
         'FLineWidth',1, 'FontColor',[0.5 0.5 0.5], 'MLabelParallel',25.11);
-geoshow(states,'FaceColor',[0.9 0.9 0.9],'EdgeColor',[0.6 0.6 0.6])
+geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
 caxis([0 0.5]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
-text(-0.38,0.86,'H', 'FontSize',12, 'FontWeight','bold')
+text(-0.38,0.86,'h', 'FontSize',12)
 
 cb = colorbar('southoutside');
 cb.Position = [0.1 0.06 0.8 0.0124];
-cb.TickLength = 0.02;
+cb.TickLength = 0.017;
 xlabel(cb, 'RMSE', 'FontSize',10);
 
 set(gcf,'PaperPositionMode','auto')
