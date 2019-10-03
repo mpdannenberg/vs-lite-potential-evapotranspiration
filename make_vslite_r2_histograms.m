@@ -99,3 +99,4 @@ set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/vslite-r2-histogram-byEcoregion.tif')
 close all;
 
+% Make a table of median R2 by ecoregion!
