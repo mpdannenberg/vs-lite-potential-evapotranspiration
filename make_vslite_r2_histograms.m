@@ -61,7 +61,7 @@ for i = 1:length(ecos)
     set(gca, 'XLim',[0 0.8], 'XTick',0:0.2:0.8, 'TickDir','out','TickLength',[0.02 0.02])
     box off;
     ci = bootci(1000,@median,r2);
-    Th{i} = [num2str(round(median(r2),3)),' [',num2str(round(ci(1),3)),', ',num2str(round(ci(2),3)),']'];
+    Th{i} = [num2str(round(median(r2),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
 
     % Hargreaves
     r2 = [ITRDB_sub.Hg];
@@ -70,7 +70,7 @@ for i = 1:length(ecos)
     p2 = plot(x, f, '-', 'Color',clr(2,:), 'LineWidth',2);
     scatter(x, f, 20, clr(2,:), 'filled')
     ci = bootci(1000,@median,r2);
-    Hg{i} = [num2str(round(median(r2),3)),' [',num2str(round(ci(1),3)),', ',num2str(round(ci(2),3)),']'];
+    Hg{i} = [num2str(round(median(r2),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
 
     % Priestly-Taylor
     r2 = [ITRDB_sub.PT];
@@ -79,7 +79,7 @@ for i = 1:length(ecos)
     p3 = plot(x, f, '-', 'Color',clr(3,:), 'LineWidth',2);
     scatter(x, f, 20, clr(3,:), 'filled')
     ci = bootci(1000,@median,r2);
-    PT{i} = [num2str(round(median(r2),3)),' [',num2str(round(ci(1),3)),', ',num2str(round(ci(2),3)),']'];
+    PT{i} = [num2str(round(median(r2),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
 
     % Penman-Monteith
     r2 = [ITRDB_sub.PM];
@@ -88,7 +88,7 @@ for i = 1:length(ecos)
     p4 = plot(x, f, '-', 'Color',clr(4,:), 'LineWidth',2);
     scatter(x, f, 20, clr(4,:), 'filled')
     ci = bootci(1000,@median,r2);
-    PM{i} = [num2str(round(median(r2),3)),' [',num2str(round(ci(1),3)),', ',num2str(round(ci(2),3)),']'];
+    PM{i} = [num2str(round(median(r2),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
 
     if i == 3
         lgd = legend([p1 p2 p3 p4],'Th','Hg','PT','PM');
