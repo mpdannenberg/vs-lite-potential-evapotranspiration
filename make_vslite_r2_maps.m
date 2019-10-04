@@ -14,7 +14,7 @@ lat = [ITRDB.LAT];
 lon = [ITRDB.LON];
 
 clr = wesanderson('fantasticfox1');
-clr = make_cmap([1 1 1; clr(3,:); clr(3,:).^2; clr(3,:).^4], 8);
+clr = make_cmap([1 1 1; clr(3,:); clr(3,:).^2; clr(3,:).^4], 7);
 
 % Thornthwaite
 r2 = [ITRDB.Th];
@@ -29,7 +29,7 @@ geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
-caxis([0 0.8]);
+caxis([0 0.7]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
 text(-0.38,0.86,'a', 'FontSize',12)
@@ -49,7 +49,7 @@ geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
-caxis([0 0.8]);
+caxis([0 0.7]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
 text(-0.38,0.86,'b', 'FontSize',12)
@@ -68,7 +68,7 @@ geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
-caxis([0 0.8]);
+caxis([0 0.7]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
 text(-0.38,0.86,'c', 'FontSize',12)
@@ -87,7 +87,7 @@ geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
-caxis([0 0.8]);
+caxis([0 0.7]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
 text(-0.38,0.86,'d', 'FontSize',12)
@@ -105,7 +105,7 @@ geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
-caxis([0 0.8]);
+caxis([0 0.7]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
 text(-0.38,0.86,'e', 'FontSize',12)
@@ -124,7 +124,7 @@ geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
-caxis([0 0.8]);
+caxis([0 0.7]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
 text(-0.38,0.86,'f', 'FontSize',12)
@@ -142,7 +142,7 @@ geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
-caxis([0 0.8]);
+caxis([0 0.7]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
 text(-0.38,0.86,'g', 'FontSize',12)
@@ -161,7 +161,7 @@ geoshow(states,'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.6 0.6 0.6])
 axis off;
 axis image;
 p1 = scatterm(lat, lon, 8, r2, 'filled');
-caxis([0 0.8]);
+caxis([0 0.7]);
 colormap(clr);
 subplotsqueeze(gca, 1.3)
 text(-0.38,0.86,'h', 'FontSize',12)
@@ -170,6 +170,7 @@ cb = colorbar('southoutside');
 cb.Position = [0.1 0.06 0.8 0.0124];
 cb.TickLength = 0.017;
 xlabel(cb, 'R^{2}', 'FontSize',10);
+cbarrow('right');
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/vslite-r2-maps.tif')
