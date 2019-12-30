@@ -339,7 +339,8 @@ b(4).FaceColor = clr(4,:);
 box off;
 set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
 ylabel('\DeltaPET (mm)', 'FontSize',11);
-text(5,100,'a', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
+ylim = get(gca, 'Ylim');
+text(5,ylim(2),'a', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
 lgd = legend('Thornthwaite','Hargreaves','Priestly-Taylor','Penman-Monteith');
 lgd.Position = [0.5965 0.89 0.2854 0.1068];
 lgd.FontSize = 7;
@@ -352,9 +353,10 @@ b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'XAxisLocation','top')
+set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'XAxisLocation','bottom', 'YDir','reverse')
 ylabel('\DeltaSoil moisture (vol/vol)', 'FontSize',11);
-text(5,-0.015,'b', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
+ylim = get(gca, 'Ylim');
+text(5,ylim(1),'b', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
 
 subplot(3,1,3)
 b = bar(ecos,gM_T2_m);
@@ -363,10 +365,11 @@ b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','top','XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
+set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','bottom','XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'YDir','reverse')
 ylabel('\Deltag_{M}', 'FontSize',11);
-text(5,-0.03,'c', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
-text(9,-0.03,'Ecoregion','HorizontalAlignment','center', 'FontSize',11, 'VerticalAlignment','top');
+ylim = get(gca, 'Ylim');
+text(5,ylim(1),'c', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
+xlabel('Ecoregion', 'FontSize',11);
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/vslite-t+2-bars.tif')
@@ -386,7 +389,8 @@ b(4).FaceColor = clr(4,:);
 box off;
 set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
 ylabel('\DeltaPET (mm)', 'FontSize',11);
-text(5,200,'a', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
+ylim = get(gca, 'Ylim');
+text(5,ylim(2),'a', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
 lgd = legend('Thornthwaite','Hargreaves','Priestly-Taylor','Penman-Monteith');
 lgd.Position = [0.5965 0.89 0.2854 0.1068];
 lgd.FontSize = 7;
@@ -399,9 +403,10 @@ b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'XAxisLocation','top')
+set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'XAxisLocation','bottom', 'YDir','reverse')
 ylabel('\DeltaSoil moisture (vol/vol)', 'FontSize',11);
-text(5,-0.03,'b', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
+ylim = get(gca, 'Ylim');
+text(5,ylim(1),'b', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
 
 subplot(3,1,3)
 b = bar(ecos,gM_T4_m);
@@ -410,10 +415,11 @@ b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','top','XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
+set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','bottom','XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'YDir','reverse')
 ylabel('\Deltag_{M}', 'FontSize',11);
-text(5,-0.06,'c', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','bottom');
-text(9,-0.06,'Ecoregion','HorizontalAlignment','center', 'FontSize',11, 'VerticalAlignment','top');
+ylim = get(gca, 'Ylim');
+text(5,ylim(1),'c', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
+xlabel('Ecoregion', 'FontSize',11);
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/vslite-t+4-bars.tif')
