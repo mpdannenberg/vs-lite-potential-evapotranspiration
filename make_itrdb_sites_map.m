@@ -37,6 +37,14 @@ cbrew = [clr(4,:)
 tlat = [ITRDB.LAT];
 tlon = [ITRDB.LON];
 
+spc = {ITRDB.SPECIES};
+unSpc = sort(unique(spc));
+nSpc = NaN(size(unSpc));
+for i = 1:length(unSpc)
+    nSpc(i) = sum(strcmp(unSpc{i}, spc));
+end
+
+
 % Time to make a map...
 load ./data/prism_latlon;
 
@@ -46,9 +54,33 @@ lonlim = [-125 -67];
 
 h=figure('Color','w');
 h.Units = 'inches';
-h.Position = [1 4 6.5 3];
+h.Position = [1 1 6.5 4.5];
 
-subplot(1,3,[1 2])
+% Bar graph of species
+nt = 5;
+subplot(3,3,7:9)
+[B,I] = sort(nSpc, 'descend');
+bar(B(B>nt), 'FaceColor',[0.8 0.8 0.8]);
+box off;
+set(gca, 'YLim',[0 180], 'XTick',1:length(B(B>nt)), 'TickDir','out',...
+    'XTickLabels',unSpc(I(B>nt)), 'XTickLabelRotation',90, 'FontSize',9,...
+    'XLim',[0 length(B(B>nt))+1]);
+ylabel('\itN', 'Rotation',0, 'HorizontalAlignment','right', 'VerticalAlignment','middle')
+ax = gca;
+ax.Position(1) = 0.1;
+ax.Position(2) = 0.12;
+ax.Position(3) = 0.85;
+ax.Position(4) = 0.28;
+
+text(14,80,...
+    {'{\bfSpecies with {\itN}<5:} ABAM, ABBA, ACSH, BELE, CADE, CHLA, CYGL, ';
+    'CYOV, FAGR, FRNI, JUOS, JUSC, JUSE, LALA, LAOC, LIDE, PCPU, ';
+    'PCRU, PIAR, PIMR, PIPN, PIRI, PISF, PISP, PIVI, PLRA, PPDE, ';
+    'QUCF, QUCO, QUFA, QULO, QULY, QUMU, QUSH, QUSP, TSHE'}, ...
+    'FontSize',7);
+
+% Map of ecoregions and site locations
+subplot(3, 3, [1 2 4 5])
 ax = axesm('lambert','MapLatLimit',latlim,'MapLonLimit',lonlim,'grid',...
         'off','PLineLocation',[28,34,40,46],'MLineLocation',10,'MeridianLabel','off',...
         'ParallelLabel','off','GLineWidth',0.3,'Frame','off','FFaceColor',...
@@ -62,12 +94,13 @@ caxis([0.5 9.5])
 colormap(cbrew)
 axis off;
 axis image;
-set(ax, 'Position',[-0.08 0.08 0.82 0.87]);
+set(ax, 'Position',[-0.08 0.2 0.82 0.9]);
 
 h = colorbar('eastoutside');
 pos = get(h, 'Position');
-set(h, 'Position',[0.64 0.15 0.03 0.7],'FontName','Times New Roman',...
+set(h, 'Position',[0.64 0.42 0.03 0.46],'FontName','Times New Roman',...
     'XTick',1:1:9, 'XTickLabel',ecolabs, 'FontSize',9, 'TickLength',0);
+
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/site-map.tif')
