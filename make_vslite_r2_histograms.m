@@ -121,6 +121,35 @@ T.Hg = Hg;
 T.PT = PT;
 T.PM = PM;
 
+%% All
+T.Name(10) = {'All'};
+T.n(10) = length(ITRDB);
+
+% Thornthwaite
+r2 = [ITRDB.Th];
+r2 = [r2.r2_val];
+ci = bootci(1000,@median,r2);
+T.Th{10} = [num2str(round(median(r2),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
+
+% Hargreaves
+r2 = [ITRDB.Hg];
+r2 = [r2.r2_val];
+ci = bootci(1000,@median,r2);
+T.Hg{10} = [num2str(round(median(r2),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
+
+% Priestly-Taylor
+r2 = [ITRDB.PT];
+r2 = [r2.r2_val];
+ci = bootci(1000,@median,r2);
+T.PT{10} = [num2str(round(median(r2),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
+
+% Penman-Monteith
+r2 = [ITRDB.PM];
+r2 = [r2.r2_val];
+ci = bootci(1000,@median,r2);
+T.PM{10} = [num2str(round(median(r2),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
+
+%% Save figure and table
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/vslite-r2-histogram-byEcoregion.tif')
 close all;
