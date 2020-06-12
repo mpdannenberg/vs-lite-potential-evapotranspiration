@@ -1,5 +1,4 @@
-% Simulate seasonally asymmetric warming (peak in winter vs. peak in
-% summer)
+% Simulate seasonally asymmetric warming (peak in winter vs. peak in summer)
 
 load ./data/ITRDB_vslite;
 
@@ -44,11 +43,13 @@ clear IN ON ecoL3;
 %% Get monthly climatology and simulate +2 and +4 C
 
 n = length(ITRDB);
+COAST = geotiffread('./data/us_CoastalBoundary_4km.tif');
+COAST(COAST<-1000) = NaN;
+
 for i = 1:n
     
     phi = ITRDB(i).LAT;
     elev = ITRDB(i).ELEV;
-    coast = 0;
     yr = ITRDB(i).YEAR;
     rwi = ITRDB(i).STD;
     
@@ -62,6 +63,7 @@ for i = 1:n
     xind = find(lon == xy(1,2));
     yind = find(lat == xy(1,1));
     
+    coast = COAST(yind, xind);
     P = squeeze(ppt.PPT(yind, xind, :, :))';
     Tmin = squeeze(tmin.tmin(yind, xind, :, :))';
     Tmax = squeeze(tmax.tmax(yind, xind, :, :))';
@@ -74,7 +76,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Th.T1,ITRDB(i).Th.T2,...
         ITRDB(i).Th.M1,ITRDB(i).Th.M2,0,0,...
-        Tmin,Tmax,Tdmean,P,0,elev, 'pet_model','Th');
+        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Th');
     w(1) = NaN;
     mw = nanmean(w(ia));
     ms = nanstd(w(ia));
@@ -88,7 +90,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Th.T1,ITRDB(i).Th.T2,...
         ITRDB(i).Th.M1,ITRDB(i).Th.M2,0,0,...
-        Tmin+seas+2,Tmax+seas+2,Tdmean+seas+2,P,0,elev, 'pet_model','Th');
+        Tmin+seas+2,Tmax+seas+2,Tdmean+seas+2,P,coast,elev, 'pet_model','Th');
     w(1) = NaN;
     rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
     rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
@@ -100,7 +102,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Th.T1,ITRDB(i).Th.T2,...
         ITRDB(i).Th.M1,ITRDB(i).Th.M2,0,0,...
-        Tmin+(-1*seas)+2,Tmax+(-1*seas)+2,Tdmean+(-1*seas)+2,P,0,elev, 'pet_model','Th');
+        Tmin+(-1*seas)+2,Tmax+(-1*seas)+2,Tdmean+(-1*seas)+2,P,coast,elev, 'pet_model','Th');
     w(1) = NaN;
     rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
     rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
@@ -113,7 +115,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Hg.T1,ITRDB(i).Hg.T2,...
         ITRDB(i).Hg.M1,ITRDB(i).Hg.M2,0,0,...
-        Tmin,Tmax,Tdmean,P,0,elev, 'pet_model','Hg');
+        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Hg');
     w(1) = NaN;
     mw = nanmean(w(ia));
     ms = nanstd(w(ia));
@@ -127,7 +129,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Hg.T1,ITRDB(i).Hg.T2,...
         ITRDB(i).Hg.M1,ITRDB(i).Hg.M2,0,0,...
-        Tmin+seas+2,Tmax+seas+2,Tdmean+seas+2,P,0,elev, 'pet_model','Hg');
+        Tmin+seas+2,Tmax+seas+2,Tdmean+seas+2,P,coast,elev, 'pet_model','Hg');
     w(1) = NaN;
     rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
     rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
@@ -139,7 +141,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Hg.T1,ITRDB(i).Hg.T2,...
         ITRDB(i).Hg.M1,ITRDB(i).Hg.M2,0,0,...
-        Tmin+(-1*seas)+2,Tmax+(-1*seas)+2,Tdmean+(-1*seas)+2,P,0,elev, 'pet_model','Hg');
+        Tmin+(-1*seas)+2,Tmax+(-1*seas)+2,Tdmean+(-1*seas)+2,P,coast,elev, 'pet_model','Hg');
     w(1) = NaN;
     rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
     rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
@@ -152,7 +154,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PT.T1,ITRDB(i).PT.T2,...
         ITRDB(i).PT.M1,ITRDB(i).PT.M2,0,0,...
-        Tmin,Tmax,Tdmean,P,0,elev, 'pet_model','PT');
+        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PT');
     w(1) = NaN;
     mw = nanmean(w(ia));
     ms = nanstd(w(ia));
@@ -166,7 +168,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PT.T1,ITRDB(i).PT.T2,...
         ITRDB(i).PT.M1,ITRDB(i).PT.M2,0,0,...
-        Tmin+seas+2,Tmax+seas+2,Tdmean+seas+2,P,0,elev, 'pet_model','PT');
+        Tmin+seas+2,Tmax+seas+2,Tdmean+seas+2,P,coast,elev, 'pet_model','PT');
     w(1) = NaN;
     rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
     rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
@@ -178,7 +180,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PT.T1,ITRDB(i).PT.T2,...
         ITRDB(i).PT.M1,ITRDB(i).PT.M2,0,0,...
-        Tmin+(-1*seas)+2,Tmax+(-1*seas)+2,Tdmean+(-1*seas)+2,P,0,elev, 'pet_model','PT');
+        Tmin+(-1*seas)+2,Tmax+(-1*seas)+2,Tdmean+(-1*seas)+2,P,coast,elev, 'pet_model','PT');
     w(1) = NaN;
     rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
     rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
@@ -191,7 +193,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PM.T1,ITRDB(i).PM.T2,...
         ITRDB(i).PM.M1,ITRDB(i).PM.M2,0,0,...
-        Tmin,Tmax,Tdmean,P,0,elev, 'pet_model','PM');
+        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PM');
     w(1) = NaN;
     mw = nanmean(w(ia));
     ms = nanstd(w(ia));
@@ -205,7 +207,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PM.T1,ITRDB(i).PM.T2,...
         ITRDB(i).PM.M1,ITRDB(i).PM.M2,0,0,...
-        Tmin+seas+2,Tmax+seas+2,Tdmean+seas+2,P,0,elev, 'pet_model','PM');
+        Tmin+seas+2,Tmax+seas+2,Tdmean+seas+2,P,coast,elev, 'pet_model','PM');
     w(1) = NaN;
     rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
     rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
@@ -217,7 +219,7 @@ for i = 1:n
     [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PM.T1,ITRDB(i).PM.T2,...
         ITRDB(i).PM.M1,ITRDB(i).PM.M2,0,0,...
-        Tmin+(-1*seas)+2,Tmax+(-1*seas)+2,Tdmean+(-1*seas)+2,P,0,elev, 'pet_model','PM');
+        Tmin+(-1*seas)+2,Tmax+(-1*seas)+2,Tdmean+(-1*seas)+2,P,coast,elev, 'pet_model','PM');
     w(1) = NaN;
     rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
     rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
