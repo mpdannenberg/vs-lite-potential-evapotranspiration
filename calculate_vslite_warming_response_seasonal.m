@@ -332,103 +332,98 @@ for i = 1:length(ecos)
     
 end
 
-%% Bargraph of +2C effect
+%% Bargraph of higher daytime warming effect
 h = figure('Color','w');
 h.Units = 'inches';
-h.Position = [1 1 5 6];
+h.Position = [1 1 7 5.5];
 
-subplot(3,1,1)
+axes('Position',[0.1,0.7,0.4,0.25])
 b = bar(ecos,pet_T2_m);
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
-ylabel('\DeltaPET (mm)', 'FontSize',11);
+set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',...
+    '','YLim',[0 100])
+text(2.75, 75, '\DeltaPET (mm)', 'FontSize',11, 'Rotation',90, 'HorizontalAlignment','center');
 ylim = get(gca, 'Ylim');
-text(5,ylim(2),'a', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','middle');
-lgd = legend('Thornthwaite','Hargreaves','Priestly-Taylor','Penman-Monteith');
-lgd.Position = [0.5965 0.89 0.2854 0.1068];
-lgd.FontSize = 7;
-legend('boxoff');
+text(5,ylim(2),'a', 'FontSize',12, 'HorizontalAlignment','center', 'VerticalAlignment','middle');
+text(9,ylim(2),'Winter > Summer', 'FontSize',12, 'HorizontalAlignment','center', 'VerticalAlignment','bottom');
 
-subplot(3,1,2)
+axes('Position',[0.1,0.4,0.4,0.25])
 b = bar(ecos,M_T2_m);
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'XAxisLocation','bottom', 'YDir','reverse')
-ylabel('\DeltaSoil moisture (vol/vol)', 'FontSize',11);
+set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',...
+    '', 'XAxisLocation','bottom', 'YDir','reverse', 'YLim',[-0.02 0])
+text(2.75, -0.01, '\DeltaSoil moisture (vol/vol)', 'FontSize',11, 'Rotation',90, 'HorizontalAlignment','center');
 ylim = get(gca, 'Ylim');
-text(5,ylim(1),'b', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','middle');
+text(5,ylim(1),'b', 'FontSize',12, 'HorizontalAlignment','center', 'VerticalAlignment','middle');
 
-subplot(3,1,3)
+axes('Position',[0.1,0.1,0.4,0.25])
 b = bar(ecos,gM_T2_m);
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','bottom','XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'YDir','reverse')
-ylabel('\Deltag_{M}', 'FontSize',11);
+set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','bottom',...
+    'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'},...
+    'YDir','reverse','YLim',[-0.04 0])
+text(2.75, -0.025, '\Deltag_{M}', 'FontSize',11, 'Rotation',90, 'HorizontalAlignment','center');
 ylim = get(gca, 'Ylim');
-text(5,ylim(1),'c', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','middle');
-xlabel('Ecoregion', 'FontSize',11);
+text(5,ylim(1),'c', 'FontSize',12, 'HorizontalAlignment','center', 'VerticalAlignment','middle');
+lgd = legend('Thornthwaite','Hargreaves','Priestly-Taylor','Penman-Monteith');
+lgd.Position = [0.25 0.27 0.2854 0.1068];
+lgd.FontSize = 7;
+legend('boxoff');
+text(9,0.01,'Ecoregion', 'FontSize',11, 'HorizontalAlignment','center', 'VerticalAlignment','middle');
 
-set(gcf,'PaperPositionMode','auto')
-print('-dtiff','-f1','-r300','./output/vslite-winter-warm-bars.tif')
-close all;
-
-%% Bargraph of +4C effect
-h = figure('Color','w');
-h.Units = 'inches';
-h.Position = [1 1 5 6];
-
-subplot(3,1,1)
+%% Bargraph of higher nighttime warming effect
+axes('Position',[0.57,0.7,0.4,0.25])
 b = bar(ecos,pet_T4_m);
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
-ylabel('\DeltaPET (mm)', 'FontSize',11);
+set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',...
+    '','YLim',[0 100])
 ylim = get(gca, 'Ylim');
-text(5,ylim(2),'a', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','middle');
-lgd = legend('Thornthwaite','Hargreaves','Priestly-Taylor','Penman-Monteith');
-lgd.Position = [0.5965 0.89 0.2854 0.1068];
-lgd.FontSize = 7;
-legend('boxoff');
+text(5,ylim(2),'d', 'FontSize',12, 'HorizontalAlignment','center', 'VerticalAlignment','middle');
+text(9,ylim(2),'Summer > Winter', 'FontSize',12, 'HorizontalAlignment','center', 'VerticalAlignment','bottom');
 
-subplot(3,1,2)
+axes('Position',[0.57,0.4,0.4,0.25])
 b = bar(ecos,M_T4_m);
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'XAxisLocation','bottom', 'YDir','reverse')
-ylabel('\DeltaSoil moisture (vol/vol)', 'FontSize',11);
+set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',...
+    '', 'XAxisLocation','bottom', 'YDir','reverse', 'YLim',[-0.02 0])
 ylim = get(gca, 'Ylim');
-text(5,ylim(1),'b', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','middle');
+text(5,ylim(1),'e', 'FontSize',12, 'HorizontalAlignment','center', 'VerticalAlignment','middle');
 
-subplot(3,1,3)
+axes('Position',[0.57,0.1,0.4,0.25])
 b = bar(ecos,gM_T4_m);
 b(1).FaceColor = clr(1,:);
 b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','bottom','XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'YDir','reverse')
-ylabel('\Deltag_{M}', 'FontSize',11);
+set(gca, 'TickDir','out','TickLength',[0.02 0.05], 'XAxisLocation','bottom',...
+    'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'},...
+    'YDir','reverse','YLim',[-0.04 0])
 ylim = get(gca, 'Ylim');
-text(5,ylim(1),'c', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','middle');
-xlabel('Ecoregion', 'FontSize',11);
+text(5,ylim(1),'f', 'FontSize',12, 'HorizontalAlignment','center', 'VerticalAlignment','middle');
+text(9,0.01,'Ecoregion', 'FontSize',11, 'HorizontalAlignment','center', 'VerticalAlignment','middle');
 
 set(gcf,'PaperPositionMode','auto')
-print('-dtiff','-f1','-r300','./output/vslite-summer-warm-bars.tif')
+print('-dtiff','-f1','-r300','./output/vslite-asymmetric-seasonal-bars.tif')
 close all;
 
