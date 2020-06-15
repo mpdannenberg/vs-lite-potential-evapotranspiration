@@ -1,5 +1,4 @@
 % Calibrate VS-Lite model for multiple PET models
-parpool local;
 
 %% Read climate data
 ppt = matfile('D:\Data_Analysis\PRISM\PRISM_PPT');
@@ -14,7 +13,6 @@ ny = length(lat);
 prismLatLon = [reshape(repmat(lat', 1, nx), [], 1) reshape(repmat(lon, ny, 1), [], 1)];
 syear = min(year);
 eyear = max(year);
-
 cal_yrs = syear:1960;
 
 %% Load and process ITRDB data
@@ -31,12 +29,15 @@ ITRDB([ITRDB.START]>1895) = [];
 ITRDB = ITRDB(~isnan([ITRDB.ELEV]));
 
 %% Calibrate parameters - takes a LONG time (even with parallel processing)
+
 n = length(ITRDB);
-parfor i = 1:n
+COAST = geotiffread('./data/us_CoastalBoundary_4km.tif');
+COAST(COAST<-1000) = NaN;
+
+for i = 1:n
     
     phi = ITRDB(i).LAT;
     elev = ITRDB(i).ELEV;
-    coast = 0;
     yr = ITRDB(i).YEAR;
     rwi = ITRDB(i).STD;
     
@@ -47,6 +48,7 @@ parfor i = 1:n
     xind = find(lon == xy(1,2));
     yind = find(lat == xy(1,1));
     
+    coast = COAST(yind, xind);
     P = squeeze(ppt.PPT(yind, xind, :, :))';
     Tmin = squeeze(tmin.tmin(yind, xind, :, :))';
     Tmax = squeeze(tmax.tmax(yind, xind, :, :))';
@@ -61,7 +63,7 @@ parfor i = 1:n
         phi,coast,elev,rwi(ib)','pet_model','Th', 'pt_ests','mle', 'verbose',0);
     
     rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
-        Tmin,Tmax,Tdmean,P,0,elev, 'pet_model','Th');
+        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Th');
     rwi_sim(1) = NaN;
     
     ITRDB(i).Th.VSLite = rwi_sim;
@@ -80,7 +82,7 @@ parfor i = 1:n
         phi,coast,elev,rwi(ib)','pet_model','Hg', 'pt_ests','mle', 'verbose',0);
     
     rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
-        Tmin,Tmax,Tdmean,P,0,elev, 'pet_model','Hg');
+        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Hg');
     rwi_sim(1) = NaN;
     
     ITRDB(i).Hg.VSLite = rwi_sim;
@@ -99,7 +101,7 @@ parfor i = 1:n
         phi,coast,elev,rwi(ib)','pet_model','PT', 'pt_ests','mle', 'verbose',0);
     
     rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
-        Tmin,Tmax,Tdmean,P,0,elev, 'pet_model','PT');
+        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PT');
     rwi_sim(1) = NaN;
     
     ITRDB(i).PT.VSLite = rwi_sim;
@@ -118,7 +120,7 @@ parfor i = 1:n
         phi,coast,elev,rwi(ib)','pet_model','PM', 'pt_ests','mle', 'verbose',0);
     
     rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
-        Tmin,Tmax,Tdmean,P,0,elev, 'pet_model','PM');
+        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PM');
     rwi_sim(1) = NaN;
     
     ITRDB(i).PM.VSLite = rwi_sim;
