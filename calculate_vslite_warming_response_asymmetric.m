@@ -16,8 +16,6 @@ prismLatLon = [reshape(repmat(lat', 1, nx), [], 1) reshape(repmat(lon, ny, 1), [
 syear = min(year);
 eyear = max(year);
 
-cal_yrs = syear:1960;
-
 %% Add EcoRegions 
 ecoL3 = shaperead('D:\Data_Analysis\EcoRegions\NA_CEC_Eco_Level3_GEO.shp', 'UseGeoCoords',true);
 
@@ -46,11 +44,6 @@ for i = 1:n
     
     phi = ITRDB(i).LAT;
     elev = ITRDB(i).ELEV;
-    yr = ITRDB(i).YEAR;
-    rwi = ITRDB(i).STD;
-    
-    m = mean(rwi(yr>=syear & yr<=1960));
-    s = std(rwi(yr>=syear & yr<=1960));
     
     xy = [ITRDB(i).LAT ITRDB(i).LON];
     DistDeg = distance(xy(1), xy(2), prismLatLon(:,1), prismLatLon(:,2));
@@ -64,162 +57,103 @@ for i = 1:n
     Tmin = squeeze(tmin.tmin(yind, xind, :, :))';
     Tmax = squeeze(tmax.tmax(yind, xind, :, :))';
     Tdmean = squeeze(tdmean.tdmean(yind, xind, :, :))';
-    T = (Tmin+Tmax)/2;
-    
-    [~,ia,ib] = intersect(cal_yrs,year);
     
     % Thornthwaite
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Th.T1,ITRDB(i).Th.T2,...
         ITRDB(i).Th.M1,ITRDB(i).Th.M2,0,0,...
         Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Th');
-    w(1) = NaN;
-    mw = nanmean(w(ia));
-    ms = nanstd(w(ia));
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).Th.Tplus0.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).Th.Tplus0.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus0.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus0.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Th.T1,ITRDB(i).Th.T2,...
         ITRDB(i).Th.M1,ITRDB(i).Th.M2,0,0,...
         Tmin+1,Tmax+3,Tdmean+1,P,coast,elev, 'pet_model','Th');
-    w(1) = NaN;
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).Th.Tplus2.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).Th.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Th.T1,ITRDB(i).Th.T2,...
         ITRDB(i).Th.M1,ITRDB(i).Th.M2,0,0,...
         Tmin+3,Tmax+1,Tdmean+3,P,coast,elev, 'pet_model','Th');
-    w(1) = NaN;
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).Th.Tplus4.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).Th.Tplus4.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus4.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus4.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
     % Hargreaves
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Hg.T1,ITRDB(i).Hg.T2,...
         ITRDB(i).Hg.M1,ITRDB(i).Hg.M2,0,0,...
         Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Hg');
-    w(1) = NaN;
-    mw = nanmean(w(ia));
-    ms = nanstd(w(ia));
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).Hg.Tplus0.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).Hg.Tplus0.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus0.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus0.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Hg.T1,ITRDB(i).Hg.T2,...
         ITRDB(i).Hg.M1,ITRDB(i).Hg.M2,0,0,...
         Tmin+1,Tmax+3,Tdmean+1,P,coast,elev, 'pet_model','Hg');
-    w(1) = NaN;
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).Hg.Tplus2.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).Hg.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Hg.T1,ITRDB(i).Hg.T2,...
         ITRDB(i).Hg.M1,ITRDB(i).Hg.M2,0,0,...
         Tmin+3,Tmax+1,Tdmean+3,P,coast,elev, 'pet_model','Hg');
-    w(1) = NaN;
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).Hg.Tplus4.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).Hg.Tplus4.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus4.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus4.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
     % Priestley-Taylor
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PT.T1,ITRDB(i).PT.T2,...
         ITRDB(i).PT.M1,ITRDB(i).PT.M2,0,0,...
         Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PT');
-    w(1) = NaN;
-    mw = nanmean(w(ia));
-    ms = nanstd(w(ia));
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).PT.Tplus0.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).PT.Tplus0.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus0.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus0.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PT.T1,ITRDB(i).PT.T2,...
         ITRDB(i).PT.M1,ITRDB(i).PT.M2,0,0,...
         Tmin+1,Tmax+3,Tdmean+1,P,coast,elev, 'pet_model','PT');
-    w(1) = NaN;
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).PT.Tplus2.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).PT.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PT.T1,ITRDB(i).PT.T2,...
         ITRDB(i).PT.M1,ITRDB(i).PT.M2,0,0,...
         Tmin+3,Tmax+1,Tdmean+3,P,coast,elev, 'pet_model','PT');
-    w(1) = NaN;
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).PT.Tplus4.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).PT.Tplus4.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus4.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus4.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
     % Penman-Monteith
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PM.T1,ITRDB(i).PM.T2,...
         ITRDB(i).PM.M1,ITRDB(i).PM.M2,0,0,...
         Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PM');
-    w(1) = NaN;
-    mw = nanmean(w(ia));
-    ms = nanstd(w(ia));
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).PM.Tplus0.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).PM.Tplus0.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus0.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus0.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PM.T1,ITRDB(i).PM.T2,...
         ITRDB(i).PM.M1,ITRDB(i).PM.M2,0,0,...
         Tmin+1,Tmax+3,Tdmean+1,P,coast,elev, 'pet_model','PM');
-    w(1) = NaN;
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).PM.Tplus2.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).PM.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     
-    [~,~,gM,~,~,M,PET,w] = VSLite_v2_3(syear, eyear, phi,...
+    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PM.T1,ITRDB(i).PM.T2,...
         ITRDB(i).PM.M1,ITRDB(i).PM.M2,0,0,...
         Tmin+3,Tmax+1,Tdmean+3,P,coast,elev, 'pet_model','PM');
-    w(1) = NaN;
-    rwi_sim = (w-mw)/ms; % Scale series relative to ambient calibration period
-    rwi_sim = rwi_sim*s + m; % Back to original scale during calibration period
-    ITRDB(i).PM.Tplus4.rwi = mean(rwi_sim(year>=1981 & year<=2010));
     ITRDB(i).PM.Tplus4.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus4.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus4.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
