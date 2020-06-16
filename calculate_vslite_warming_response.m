@@ -1,6 +1,7 @@
 % Simulate effect of +2C
 
 load ./data/ITRDB_vslite;
+alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
 %% Read climate data
 ppt = matfile('D:\Data_Analysis\PRISM\PRISM_PPT');
@@ -66,6 +67,9 @@ for i = 1:n
     ITRDB(i).Th.Tplus0.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus0.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus0.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
+    ITRDB(i).Th.Tplus0.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Th.Tplus0.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Th.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     
     [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Th.T1,ITRDB(i).Th.T2,...
@@ -74,6 +78,9 @@ for i = 1:n
     ITRDB(i).Th.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
+    ITRDB(i).Th.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Th.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Th.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     
     % Hargreaves
     [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
@@ -83,6 +90,9 @@ for i = 1:n
     ITRDB(i).Hg.Tplus0.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus0.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus0.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
+    ITRDB(i).Hg.Tplus0.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Hg.Tplus0.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Hg.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     
     [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Hg.T1,ITRDB(i).Hg.T2,...
@@ -91,6 +101,9 @@ for i = 1:n
     ITRDB(i).Hg.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
+    ITRDB(i).Hg.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Hg.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Hg.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     
     % Priestley-Taylor
     [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
@@ -100,6 +113,9 @@ for i = 1:n
     ITRDB(i).PT.Tplus0.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus0.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus0.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
+    ITRDB(i).PT.Tplus0.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PT.Tplus0.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PT.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     
     [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PT.T1,ITRDB(i).PT.T2,...
@@ -108,6 +124,9 @@ for i = 1:n
     ITRDB(i).PT.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
+    ITRDB(i).PT.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PT.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PT.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     
     % Penman-Monteith
     [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
@@ -117,6 +136,9 @@ for i = 1:n
     ITRDB(i).PM.Tplus0.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus0.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus0.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
+    ITRDB(i).PM.Tplus0.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PM.Tplus0.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PM.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     
     [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PM.T1,ITRDB(i).PM.T2,...
@@ -125,6 +147,9 @@ for i = 1:n
     ITRDB(i).PM.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
+    ITRDB(i).PM.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PM.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PM.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     
 end
 clear coast DistDeg DistKM elev gM i m M ms mw n P PET phi rwi rwi_sim s T Tdmean Tmax Tmin w xind xy yind yr;
@@ -245,4 +270,165 @@ xlabel('Ecoregion', 'FontSize',11);
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/vslite-t+2-bars.tif')
 close all;
+
+%% Make monthly difference plots
+
+h = figure('Color','w');
+h.Units = 'inches';
+h.Position = [1 1 6.5 9];
+
+ha = tight_subplot(9, 3, [0.02 0.1], [0.06 0.03], [0.1 0.05]);
+
+for i = 1:length(ecos)
+    
+    ITRDB_sub = ITRDB(ecol1 == ecos(i));
+    n = length(ITRDB_sub);
+    
+    %% PET differences
+    axes(ha(3*(i-1)+1))
+    
+    % Thornthwaite
+    model = [ITRDB_sub.Th];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',1.2)
+    hold on;
+    
+    % Hargreaves
+    model = [ITRDB_sub.Hg];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',1.2)
+    
+    % Priestly-Taylor
+    model = [ITRDB_sub.PT];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',1.2)
+    
+    % Penman-Monteith
+    model = [ITRDB_sub.PM];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',1.2)
+    hold off;
+    
+    set(gca, 'XLim',[1 12], 'TickDir','out', 'TickLength',[0.02 0],...
+        'YLim',[0 12],'YTick',0:5:10)
+    if i<length(ecos); set(gca, 'XTickLabel',''); end
+    if i==length(ecos); xlabel('Month'); end
+    %if i == 1; title('PET'); end
+    box off;
+    ylabel('\DeltaPET (mm)')
+    ylim = get(gca, 'Ylim');
+    text(1.5, ylim(2), alphabet(3*(i-1)+1))
+
+    %% M differences
+    axes(ha(3*(i-1)+2))
+    
+    % Thornthwaite
+    model = [ITRDB_sub.Th];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',1.2)
+    hold on;
+    
+    % Hargreaves
+    model = [ITRDB_sub.Hg];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',1.2)
+    
+    % Priestly-Taylor
+    model = [ITRDB_sub.PT];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',1.2)
+    
+    % Penman-Monteith
+    model = [ITRDB_sub.PM];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',1.2)
+    hold off;
+    
+    set(gca, 'XLim',[1 12], 'TickDir','out', 'TickLength',[0.02 0],...
+        'YLim',[-0.015 0], 'YTick',-0.015:0.005:0, 'YTickLabel',{'','-0.01','','0'})
+    if i<length(ecos); set(gca, 'XTickLabel',''); end
+    if i==length(ecos); xlabel('Month'); end
+    %if i == 1; title('PET'); end
+    box off;
+    ylabel('\DeltaM (vol/vol)')
+    ylim = get(gca, 'Ylim');
+    text(1.5, ylim(2), alphabet(3*(i-1)+2))
+
+    %% gM differences
+    axes(ha(3*(i-1)+3))
+    
+    % Thornthwaite
+    model = [ITRDB_sub.Th];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',1.2)
+    hold on;
+    
+    % Hargreaves
+    model = [ITRDB_sub.Hg];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',1.2)
+    
+    % Priestly-Taylor
+    model = [ITRDB_sub.PT];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',1.2)
+    
+    % Penman-Monteith
+    model = [ITRDB_sub.PM];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',1.2)
+    hold off;
+    
+    set(gca, 'XLim',[1 12], 'TickDir','out', 'TickLength',[0.02 0],...
+        'YLim',[-0.055 0], 'YTick',-0.05:0.01:0, 'YTickLabel',{'','-0.04','','-0.02','','0'})
+    if i<length(ecos); set(gca, 'XTickLabel',''); end
+    if i==length(ecos); xlabel('Month'); end
+    %if i == 1; title('PET'); end
+    box off;
+    ylabel('\Deltag_{M}')
+    ylim = get(gca, 'Ylim');
+    if i<length(ecos)
+        text(1.5, ylim(2), alphabet(3*(i-1)+3))
+    else
+        text(1.5, ylim(2), 'aa')
+    end
+    if i == 1
+        lgd = legend('Th', 'Hg', 'PT','PM', 'Location','southeast');
+        legend('boxoff')
+        lgd.FontSize = 6;
+        lgd.Position(1) = 0.735;
+        lgd.Position(2) = 0.885;
+    end
+
+    
+end
+
+set(gcf,'PaperPositionMode','auto')
+print('-dtiff','-f1','-r300','./output/vslite-t+2-monthly.tif')
+close all;
+
 
