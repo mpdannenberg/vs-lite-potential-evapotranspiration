@@ -292,7 +292,7 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',2)
     hold on;
     
     % Hargreaves
@@ -300,21 +300,21 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',2)
     
     % Priestly-Taylor
     model = [ITRDB_sub.PT];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',2)
     
     % Penman-Monteith
     model = [ITRDB_sub.PM];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',2)
     hold off;
     
     set(gca, 'XLim',[1 12], 'TickDir','out', 'TickLength',[0.02 0],...
@@ -335,7 +335,7 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',2)
     hold on;
     
     % Hargreaves
@@ -343,21 +343,21 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',2)
     
     % Priestly-Taylor
     model = [ITRDB_sub.PT];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',2)
     
     % Penman-Monteith
     model = [ITRDB_sub.PM];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',2)
     hold off;
     
     set(gca, 'XLim',[1 12], 'TickDir','out', 'TickLength',[0.02 0],...
@@ -378,7 +378,7 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',2)
     hold on;
     
     % Hargreaves
@@ -386,21 +386,21 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',2)
     
     % Priestly-Taylor
     model = [ITRDB_sub.PT];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',2)
     
     % Penman-Monteith
     model = [ITRDB_sub.PM];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',1.2)
+    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',2)
     hold off;
     
     set(gca, 'XLim',[1 12], 'TickDir','out', 'TickLength',[0.02 0],...
