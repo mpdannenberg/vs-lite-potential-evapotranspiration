@@ -277,7 +277,7 @@ h = figure('Color','w');
 h.Units = 'inches';
 h.Position = [1 1 6.5 9];
 
-ha = tight_subplot(9, 3, [0.02 0.1], [0.06 0.03], [0.1 0.05]);
+ha = tight_subplot(9, 3, [0.02 0.1], [0.05 0.04], [0.1 0.05]);
 
 for i = 1:length(ecos)
     
@@ -321,11 +321,15 @@ for i = 1:length(ecos)
         'YLim',[0 12],'YTick',0:5:10)
     if i<length(ecos); set(gca, 'XTickLabel',''); end
     if i==length(ecos); xlabel('Month'); end
-    %if i == 1; title('PET'); end
+    ylim = get(gca, 'Ylim');
+    if i == 1 
+        ttl = title('\DeltaPET', 'FontSize',11); 
+        ttl.Position(2) = ylim(2) + (ylim(2) - ylim(1))*0.1;
+    end
     box off;
     ylabel('\DeltaPET (mm)')
     ylim = get(gca, 'Ylim');
-    text(1.5, ylim(2), alphabet(3*(i-1)+1))
+    text(1.5, ylim(2), [alphabet(i),') ',sprintf('%1.1f',ecos(i))])
 
     %% M differences
     axes(ha(3*(i-1)+2))
@@ -364,11 +368,14 @@ for i = 1:length(ecos)
         'YLim',[-0.015 0], 'YTick',-0.015:0.005:0, 'YTickLabel',{'','-0.01','','0'})
     if i<length(ecos); set(gca, 'XTickLabel',''); end
     if i==length(ecos); xlabel('Month'); end
-    %if i == 1; title('PET'); end
+    ylim = get(gca, 'Ylim');
+    if i == 1 
+        ttl = title('\DeltaSoil moisture', 'FontSize',11); 
+        ttl.Position(2) = ylim(2) + (ylim(2) - ylim(1))*0.1;
+    end
     box off;
     ylabel('\DeltaM (vol/vol)')
-    ylim = get(gca, 'Ylim');
-    text(1.5, ylim(2), alphabet(3*(i-1)+2))
+    text(1.5, ylim(2), [alphabet(i+length(ecos)),') ',sprintf('%1.1f',ecos(i))])
 
     %% gM differences
     axes(ha(3*(i-1)+3))
@@ -407,14 +414,17 @@ for i = 1:length(ecos)
         'YLim',[-0.055 0], 'YTick',-0.05:0.01:0, 'YTickLabel',{'','-0.04','','-0.02','','0'})
     if i<length(ecos); set(gca, 'XTickLabel',''); end
     if i==length(ecos); xlabel('Month'); end
-    %if i == 1; title('PET'); end
+    ylim = get(gca, 'Ylim');
+    if i == 1 
+        ttl = title('\Deltag_{M}', 'FontSize',11); 
+        ttl.Position(2) = ylim(2) + (ylim(2) - ylim(1))*0.1;
+    end
     box off;
     ylabel('\Deltag_{M}')
-    ylim = get(gca, 'Ylim');
     if i<length(ecos)
-        text(1.5, ylim(2), alphabet(3*(i-1)+3))
+        text(1.5, ylim(2), [alphabet(i+length(ecos)*2),') ',sprintf('%1.1f',ecos(i))])
     else
-        text(1.5, ylim(2), 'aa')
+        text(1.5, ylim(2), ['aa) ',sprintf('%1.1f',ecos(i))])
     end
     if i == 1
         lgd = legend('Th', 'Hg', 'PT','PM', 'Location','southeast');
