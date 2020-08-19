@@ -72,12 +72,14 @@ ax.Position(2) = 0.12;
 ax.Position(3) = 0.85;
 ax.Position(4) = 0.28;
 
-text(14,80,...
-    {'{\bfSpecies with {\itN}<5:} ABAM, ABBA, ACSH, BELE, CADE, CHLA, CYGL, ';
-    'CYOV, FAGR, FRNI, JUOS, JUSC, JUSE, LALA, LAOC, LIDE, PCPU, ';
-    'PCRU, PIAR, PIMR, PIPN, PIRI, PISF, PISP, PIVI, PLRA, PPDE, ';
-    'QUCF, QUCO, QUFA, QULO, QULY, QUMU, QUSH, QUSP, TSHE'}, ...
-    'FontSize',7);
+% text(14,80,...
+%     {'{\bfSpecies with {\itN}<5:} ABAM, ABBA, ACSH, BELE, CADE, CHLA, CYGL, ';
+%     'CYOV, FAGR, FRNI, JUOS, JUSC, JUSE, LALA, LAOC, LIDE, PCPU, ';
+%     'PCRU, PIAR, PIMR, PIPN, PIRI, PISF, PISP, PIVI, PLRA, PPDE, ';
+%     'QUCF, QUCO, QUFA, QULO, QULY, QUMU, QUSH, QUSP, TSHE'}, ...
+%     'FontSize',7);
+
+text(-3, 180, 'b', 'FontSize',12);
 
 % Map of ecoregions and site locations
 subplot(3, 3, [1 2 4 5])
@@ -101,9 +103,12 @@ pos = get(h, 'Position');
 set(h, 'Position',[0.64 0.42 0.03 0.46],'FontName','Times New Roman',...
     'XTick',1:1:9, 'XTickLabel',ecolabs, 'FontSize',9, 'TickLength',0);
 
+text(-0.314,0.85,'a', 'FontSize',12)
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/site-map.tif')
 close all;
 
+T = table(unSpc', nSpc', 'VariableNames',{'Code','N'});
+writetable(T, './output/TableS1_Species.xlsx');
 
