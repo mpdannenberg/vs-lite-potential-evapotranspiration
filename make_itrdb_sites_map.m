@@ -1,6 +1,24 @@
 % Map L1 ecoregions w/ tree-ring sites and AmeriFlux sites
 
 load ./data/ITRDB_vslite.mat;
+% Add EcoRegions 
+ecoL3 = shaperead('D:\Data_Analysis\EcoRegions\NA_CEC_Eco_Level3_GEO.shp', 'UseGeoCoords',true);
+
+for i = 1:length(ecoL3)
+    [IN, ON] = inpolygon([ITRDB.LAT], [ITRDB.LON], ecoL3(i).Lat, ecoL3(i).Lon);
+    
+    if sum(IN)>0 | sum(ON)>0 
+        [ITRDB(IN==1 | ON==1).EcoL3_Code] = deal(ecoL3(i).NA_L3CODE);
+        [ITRDB(IN==1 | ON==1).EcoL3_Name] = deal(ecoL3(i).NA_L3NAME);
+        [ITRDB(IN==1 | ON==1).EcoL2_Code] = deal(ecoL3(i).NA_L2CODE);
+        [ITRDB(IN==1 | ON==1).EcoL2_Name] = deal(ecoL3(i).NA_L2NAME);
+        [ITRDB(IN==1 | ON==1).EcoL1_Code] = deal(ecoL3(i).NA_L1CODE);
+        [ITRDB(IN==1 | ON==1).EcoL1_Name] = deal(ecoL3(i).NA_L1NAME);
+    end
+    
+end
+clear IN ON ecoL3 i;
+ITRDB = ITRDB(~cellfun(@isempty,{ITRDB.EcoL1_Code}));
 
 load ./data/conus_mask;
 ecol1 = double(geotiffread('./data/us_EcoL1_4km.tif'));
