@@ -60,7 +60,7 @@ for i = 1:n
     Tdmean = squeeze(tdmean.tdmean(yind, xind, :, :))';
     
     % Thornthwaite
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
+    [rwl,gT,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Th.T1,ITRDB(i).Th.T2,...
         ITRDB(i).Th.M1,ITRDB(i).Th.M2,0,0,...
         Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Th');
@@ -70,20 +70,23 @@ for i = 1:n
     ITRDB(i).Th.Tplus0.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).Th.Tplus0.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).Th.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Th.Tplus0.gTseas = mean(gT(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Th.Tplus0.rwl = rwl(year>=1981 & year<=2010);
     
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
+    [rwl,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Th.T1,ITRDB(i).Th.T2,...
         ITRDB(i).Th.M1,ITRDB(i).Th.M2,0,0,...
-        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','Th');
+        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','Th', 'gT_0',gT);
     ITRDB(i).Th.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Th.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).Th.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).Th.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Th.Tplus0.rwl = rwl(year>=1981 & year<=2010);
     
     % Hargreaves
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
+    [rwl,gT,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Hg.T1,ITRDB(i).Hg.T2,...
         ITRDB(i).Hg.M1,ITRDB(i).Hg.M2,0,0,...
         Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Hg');
@@ -93,20 +96,23 @@ for i = 1:n
     ITRDB(i).Hg.Tplus0.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).Hg.Tplus0.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).Hg.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Hg.Tplus0.gTseas = mean(gT(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Hg.Tplus0.rwl = rwl(year>=1981 & year<=2010);
     
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
+    [rwl,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Hg.T1,ITRDB(i).Hg.T2,...
         ITRDB(i).Hg.M1,ITRDB(i).Hg.M2,0,0,...
-        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','Hg');
+        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','Hg', 'gT_0',gT);
     ITRDB(i).Hg.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).Hg.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).Hg.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).Hg.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).Hg.Tplus0.rwl = rwl(year>=1981 & year<=2010);
     
     % Priestley-Taylor
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
+    [rwl,gT,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PT.T1,ITRDB(i).PT.T2,...
         ITRDB(i).PT.M1,ITRDB(i).PT.M2,0,0,...
         Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PT');
@@ -116,20 +122,23 @@ for i = 1:n
     ITRDB(i).PT.Tplus0.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PT.Tplus0.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PT.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PT.Tplus0.gTseas = mean(gT(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PT.Tplus0.rwl = rwl(year>=1981 & year<=2010);
     
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
+    [rwl,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PT.T1,ITRDB(i).PT.T2,...
         ITRDB(i).PT.M1,ITRDB(i).PT.M2,0,0,...
-        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','PT');
+        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','PT', 'gT_0',gT);
     ITRDB(i).PT.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PT.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PT.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PT.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PT.Tplus0.rwl = rwl(year>=1981 & year<=2010);
     
     % Penman-Monteith
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
+    [rwl,gT,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PM.T1,ITRDB(i).PM.T2,...
         ITRDB(i).PM.M1,ITRDB(i).PM.M2,0,0,...
         Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PM');
@@ -139,17 +148,20 @@ for i = 1:n
     ITRDB(i).PM.Tplus0.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PM.Tplus0.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PM.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PM.Tplus0.gTseas = mean(gT(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PM.Tplus0.rwl = rwl(year>=1981 & year<=2010);
     
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
+    [rwl,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PM.T1,ITRDB(i).PM.T2,...
         ITRDB(i).PM.M1,ITRDB(i).PM.M2,0,0,...
-        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','PM');
+        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','PM', 'gT_0',gT);
     ITRDB(i).PM.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
     ITRDB(i).PM.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PM.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PM.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
+    ITRDB(i).PM.Tplus0.rwl = rwl(year>=1981 & year<=2010);
     
 end
 clear coast DistDeg DistKM elev gM i m M ms mw n P PET phi rwi rwi_sim s T Tdmean Tmax Tmin w xind xy yind yr;
@@ -164,10 +176,13 @@ ecos = sort(unique(ecol1));
 
 pet_T2_m = NaN(length(ecos), 4);
 pet_T2_s = NaN(length(ecos), 4);
+pet_T2_c = NaN(length(ecos), 2, 4);
 M_T2_m = NaN(length(ecos), 4);
 M_T2_s = NaN(length(ecos), 4);
+M_T2_c = NaN(length(ecos), 2, 4);
 gM_T2_m = NaN(length(ecos), 4);
 gM_T2_s = NaN(length(ecos), 4);
+gM_T2_c = NaN(length(ecos), 2, 4);
 n = NaN(length(ecos), 1);
 
 for i = 1:length(ecos)
@@ -179,45 +194,57 @@ for i = 1:length(ecos)
     model = [ITRDB_sub.Th];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
-    pet_T2_m(i, 1) = mean(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T2_m(i, 1) = median(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
     pet_T2_s(i, 1) = std(12*[T2.PET] - 12*[T0.PET]) / sqrt(length(model));
-    M_T2_m(i, 1) = mean([T2.M] - [T0.M]);
+    pet_T2_c(i, :, 1) = bootci(1000, @median, (12*[T2.PET] - 12*[T0.PET]) );
+    M_T2_m(i, 1) = median([T2.M] - [T0.M]);
     M_T2_s(i, 1) = std([T2.M] - [T0.M]) / sqrt(length(model));
-    gM_T2_m(i, 1) = mean([T2.gM] - [T0.gM]);
+    M_T2_c(i, :, 1) = bootci(1000, @median, ([T2.M] - [T0.M]) );
+    gM_T2_m(i, 1) = median([T2.gM] - [T0.gM]);
     gM_T2_s(i, 1) = std([T2.gM] - [T0.gM]) / sqrt(length(model));
+    gM_T2_c(i, :, 1) = bootci(1000, @median, ([T2.gM] - [T0.gM]) );
     
     % Hargreaves
     model = [ITRDB_sub.Hg];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
-    pet_T2_m(i, 2) = mean(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T2_m(i, 2) = median(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
     pet_T2_s(i, 2) = std(12*[T2.PET] - 12*[T0.PET]) / sqrt(length(model));
-    M_T2_m(i, 2) = mean([T2.M] - [T0.M]);
+    pet_T2_c(i, :, 2) = bootci(1000, @median, (12*[T2.PET] - 12*[T0.PET]) );
+    M_T2_m(i, 2) = median([T2.M] - [T0.M]);
     M_T2_s(i, 2) = std([T2.M] - [T0.M]) / sqrt(length(model));
-    gM_T2_m(i, 2) = mean([T2.gM] - [T0.gM]);
+    M_T2_c(i, :, 2) = bootci(1000, @median, ([T2.M] - [T0.M]) );
+    gM_T2_m(i, 2) = median([T2.gM] - [T0.gM]);
     gM_T2_s(i, 2) = std([T2.gM] - [T0.gM]) / sqrt(length(model));
+    gM_T2_c(i, :, 2) = bootci(1000, @median, ([T2.gM] - [T0.gM]) );
     
     % Priestly-Taylor
     model = [ITRDB_sub.PT];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
-    pet_T2_m(i, 3) = mean(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T2_m(i, 3) = median(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
     pet_T2_s(i, 3) = std(12*[T2.PET] - 12*[T0.PET]) / sqrt(length(model));
-    M_T2_m(i, 3) = mean([T2.M] - [T0.M]);
+    pet_T2_c(i, :, 3) = bootci(1000, @median, (12*[T2.PET] - 12*[T0.PET]) );
+    M_T2_m(i, 3) = median([T2.M] - [T0.M]);
     M_T2_s(i, 3) = std([T2.M] - [T0.M]) / sqrt(length(model));
-    gM_T2_m(i, 3) = mean([T2.gM] - [T0.gM]);
+    M_T2_c(i, :, 3) = bootci(1000, @median, ([T2.M] - [T0.M]) );
+    gM_T2_m(i, 3) = median([T2.gM] - [T0.gM]);
     gM_T2_s(i, 3) = std([T2.gM] - [T0.gM]) / sqrt(length(model));
+    gM_T2_c(i, :, 3) = bootci(1000, @median, ([T2.gM] - [T0.gM]) );
     
     % Penman-Monteith
     model = [ITRDB_sub.PM];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
-    pet_T2_m(i, 4) = mean(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
+    pet_T2_m(i, 4) = median(12*[T2.PET] - 12*[T0.PET]); % Mean monthly --> mean annual
     pet_T2_s(i, 4) = std(12*[T2.PET] - 12*[T0.PET]) / sqrt(length(model));
-    M_T2_m(i, 4) = mean([T2.M] - [T0.M]);
+    pet_T2_c(i, :, 4) = bootci(1000, @median, (12*[T2.PET] - 12*[T0.PET]) );
+    M_T2_m(i, 4) = median([T2.M] - [T0.M]);
     M_T2_s(i, 4) = std([T2.M] - [T0.M]) / sqrt(length(model));
-    gM_T2_m(i, 4) = mean([T2.gM] - [T0.gM]);
+    M_T2_c(i, :, 4) = bootci(1000, @median, ([T2.M] - [T0.M]) );
+    gM_T2_m(i, 4) = median([T2.gM] - [T0.gM]);
     gM_T2_s(i, 4) = std([T2.gM] - [T0.gM]) / sqrt(length(model));
+    gM_T2_c(i, :, 4) = bootci(1000, @median, ([T2.gM] - [T0.gM]) );
     
 end
 
@@ -233,6 +260,12 @@ b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
+% for k1 = 1:size(pet_T2_m,2)
+%     ctr(k1,:) = bsxfun(@plus, b(k1).XData, b(k1).XOffset');   % Note: ‘XOffset’ Is An Undocumented Feature, This Selects The ‘bar’ Centres
+%     ydt(k1,:) = b(k1).YData;                                     % Individual Bar Heights
+% end
+% hold on
+% errorbar(ctr', ydt', ydt'-squeeze(pet_T2_c(:,1,:)), squeeze(pet_T2_c(:,2,:))-ydt', '.k')
 set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'})
 ylabel('\DeltaPET (mm)', 'FontSize',11);
 ylim = get(gca, 'Ylim');
@@ -249,7 +282,7 @@ b(2).FaceColor = clr(2,:);
 b(3).FaceColor = clr(3,:);
 b(4).FaceColor = clr(4,:);
 box off;
-set(gca, 'TickDir','out','TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'XAxisLocation','bottom', 'YDir','reverse')
+set(gca, 'TickDir','out','YLim',[-0.015 0],'TickLength',[0.02 0.05],'XTickLabels',{'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}, 'XAxisLocation','bottom', 'YDir','reverse')
 ylabel('\DeltaSoil moisture (vol/vol)', 'FontSize',11);
 ylim = get(gca, 'Ylim');
 text(5,ylim(1),'b', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
@@ -266,6 +299,7 @@ ylabel('\Deltag_{M}', 'FontSize',11);
 ylim = get(gca, 'Ylim');
 text(5,ylim(1),'c', 'FontSize',12, 'HorizontalAlignment','right', 'VerticalAlignment','top');
 xlabel('Ecoregion', 'FontSize',11);
+
 
 set(gcf,'PaperPositionMode','auto')
 print('-dtiff','-f1','-r300','./output/vslite-t+2-bars.tif')
@@ -292,7 +326,7 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',2)
     hold on;
     
     % Hargreaves
@@ -300,21 +334,21 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',2)
     
     % Priestly-Taylor
     model = [ITRDB_sub.PT];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',2)
     
     % Penman-Monteith
     model = [ITRDB_sub.PM];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.PETseas], 12, []) - reshape([T0.PETseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',2)
     hold off;
     
     set(gca, 'XLim',[1 12], 'TickDir','out', 'TickLength',[0.02 0],...
@@ -339,7 +373,7 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',2)
     hold on;
     
     % Hargreaves
@@ -347,21 +381,21 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',2)
     
     % Priestly-Taylor
     model = [ITRDB_sub.PT];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',2)
     
     % Penman-Monteith
     model = [ITRDB_sub.PM];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.Mseas], 12, []) - reshape([T0.Mseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',2)
     hold off;
     
     set(gca, 'XLim',[1 12], 'TickDir','out', 'TickLength',[0.02 0],...
@@ -385,7 +419,7 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(1,:), 'LineWidth',2)
     hold on;
     
     % Hargreaves
@@ -393,21 +427,21 @@ for i = 1:length(ecos)
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(2,:), 'LineWidth',2)
     
     % Priestly-Taylor
     model = [ITRDB_sub.PT];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(3,:), 'LineWidth',2)
     
     % Penman-Monteith
     model = [ITRDB_sub.PM];
     T0 = [model.Tplus0];
     T2 = [model.Tplus2];
     pet = reshape([T2.gMseas], 12, []) - reshape([T0.gMseas], 12, []);
-    plot(1:12, mean(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',2)
+    plot(1:12, median(pet, 2)', '-', 'Color',clr(4,:), 'LineWidth',2)
     hold off;
     
     set(gca, 'XLim',[1 12], 'TickDir','out', 'TickLength',[0.02 0],...
@@ -442,3 +476,59 @@ print('-dtiff','-f1','-r300','./output/vslite-t+2-monthly.tif')
 close all;
 
 
+%% Make tables with median responses and CIs
+T = table({'5.0','6.0','7.0','8.0','9.0','10.0','11.0','12.0','13.0'}',...
+    {'Northern Forests','Northwestern Forested Mountains',...
+    'Marine West Coast Forest','Eastern Temperate Forests','Great Plains',...
+    'North American Deserts','Mediterranean California',...
+    'Southern Semi-Arid Highlands','Temperate Sierras'}', 'VariableNames',{'Code','Name'});
+Th = cell(9,1);
+Hg = cell(9,1);
+PT = cell(9,1);
+PM = cell(9,1);
+
+for i = 1:length(ecos)
+    ITRDB_sub = ITRDB(ecol1 == ecos(i));
+    
+    % Thornthwaite
+    model = [ITRDB_sub.Th];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    dat = 12*[T2.PET] - 12*[T0.PET];
+    ci = bootci(1000,@median,dat);
+    Th{i} = [num2str(round(median(dat),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
+
+    % hargreaves
+    model = [ITRDB_sub.Hg];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    dat = 12*[T2.PET] - 12*[T0.PET];
+    ci = bootci(1000,@median,dat);
+    Hg{i} = [num2str(round(median(dat),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
+    
+    % Priestly-Taylor
+    model = [ITRDB_sub.PT];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    dat = 12*[T2.PET] - 12*[T0.PET];
+    ci = bootci(1000,@median,dat);
+    PT{i} = [num2str(round(median(dat),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
+    
+    % Penman-Monteith
+    model = [ITRDB_sub.PM];
+    T0 = [model.Tplus0];
+    T2 = [model.Tplus2];
+    dat = 12*[T2.PET] - 12*[T0.PET];
+    ci = bootci(1000,@median,dat);
+    PM{i} = [num2str(round(median(dat),2)),' [',num2str(round(ci(1),2)),', ',num2str(round(ci(2),2)),']'];
+    
+    clear dat;
+
+end
+
+T.Th = Th;
+T.Hg = Hg;
+T.PT = PT;
+T.PM = PM;
+
+% pick up here
