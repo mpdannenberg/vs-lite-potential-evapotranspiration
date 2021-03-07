@@ -31,26 +31,26 @@ for i = 1:length(ecos)
     % Thornthwaite
     temp2 = [temp.Th];
     temp2 = [temp2.TRW]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(1,:), 'LineWidth',1.5)
     hold on;
     
     % Hargreaves
     temp2 = [temp.Hg];
     temp2 = [temp2.TRW]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(2,:), 'LineWidth',1.5)
     
     % Priestly-Taylor 
     temp2 = [temp.PT];
     temp2 = [temp2.TRW]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(3,:), 'LineWidth',1.5)
     
     % Penman-Monteith
     temp2 = [temp.PM];
     temp2 = [temp2.TRW]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(4,:), 'LineWidth',1.5)
     
     box off;
@@ -101,7 +101,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.gM_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(1,:), 'LineWidth',1.5)
     hold on;
     
@@ -110,7 +110,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.gM_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(2,:), 'LineWidth',1.5)
     
     % Priestly-Taylor - interesting... some of the climate models didn't
@@ -119,7 +119,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.gM_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(3,:), 'LineWidth',1.5)
     
     % Penman-Monteith
@@ -127,7 +127,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.gM_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(4,:), 'LineWidth',1.5)
     
     box off;
@@ -178,7 +178,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.M_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(1,:), 'LineWidth',1.5)
     hold on;
     
@@ -187,7 +187,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.M_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(2,:), 'LineWidth',1.5)
     
     % Priestly-Taylor - interesting... some of the climate models didn't
@@ -196,7 +196,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.M_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(3,:), 'LineWidth',1.5)
     
     % Penman-Monteith
@@ -204,7 +204,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.M_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(4,:), 'LineWidth',1.5)
     
     box off;
@@ -255,7 +255,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.PET_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(1,:), 'LineWidth',1.5)
     hold on;
     
@@ -264,7 +264,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.PET_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(2,:), 'LineWidth',1.5)
     
     % Priestly-Taylor - interesting... some of the climate models didn't
@@ -273,7 +273,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.PET_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(3,:), 'LineWidth',1.5)
     
     % Penman-Monteith
@@ -281,7 +281,7 @@ for i = 1:length(ecos)
     temp2 = [temp2.PET_trend]; temp2(end, :) = NaN; % Remove 2100 since some models have it and some don't
     xbar = repmat(mean(temp2(years>=1981 & years<=2010, :)), length(years), 1);
     temp2 = 100 * (temp2 - xbar) ./ xbar;
-    trw = nanmedian(temp2, 2);
+    trw = nanmean(temp2, 2);
     plot(years, trw, '-', 'Color',clr(4,:), 'LineWidth',1.5)
     
     box off;
