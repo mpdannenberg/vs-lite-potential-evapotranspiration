@@ -1,6 +1,9 @@
-% Simulate effect of +2C
+% Use down-scaled CMIP5 model ensemble to drive calibrated VS-Lite model
+% with different PET formulations to see differences in projected PET, soil
+% moisture, soil moisture stress, and growth under warming
 
 load ./output/ITRDB_bcsd;
+ITRDB = ITRDB(cellfun(@ischar, {ITRDB.EcoL1_Code}));
 syear = 1950;
 eyear = 2100;
 bcsd_year = syear:eyear;
@@ -42,11 +45,11 @@ for j = 1:n
     
     coast = COAST(yind, xind);
     
-    % Fit relationship between Tmin and Tdmean from PRISM for application
-    % to BCSD projections.
+    % Calculate adjustment factor for estimating Tdmean from Tmin based on
+    % PRISM data.
     Tmin = reshape(squeeze(tmin.tmin(yind, xind, :, :))', [], 1);
     Tdmean = reshape(squeeze(tdmean.tdmean(yind, xind, :, :))', [], 1);
-    mdl = fitlm(Tmin, Tdmean);
+    a = nanmean(Tmin-Tdmean);
     
     % Get 1981-2010 mean precip and gT from observations (these are
     % controlled in model simulations to isolate just the effect of
@@ -59,8 +62,11 @@ for j = 1:n
     models = ITRDB(j).RCP45.Models;
     Tmin = ITRDB(j).RCP45.Tmin;
     Tmax = ITRDB(j).RCP45.Tmax;
-    Tdmean = Tmin*mdl.Coefficients.Estimate(2) + mdl.Coefficients.Estimate(1);
-    Tdmean(Tdmean > Tmin) = Tmin(Tdmean > Tmin);
+    if a > 0
+        Tdmean = Tmin - a;
+    else
+        Tdmean = Tmin;
+    end
     
     % Loop through each model
     for k = 1:length(models)
@@ -69,9 +75,6 @@ for j = 1:n
             ITRDB(j).Th.T1, ITRDB(j).Th.T2,...
             ITRDB(j).Th.M1, ITRDB(j).Th.M2,0,0,...
             Tmin(:,:,k), Tmax(:,:,k), Tdmean(:,:,k), P, coast, elev, 'pet_model','Th', 'gT_0',gT);
-%         ITRDB(j).RCP45.Th.PET(:,:,k) = PET;
-%         ITRDB(j).RCP45.Th.M(:,:,k) = M;
-%         ITRDB(j).RCP45.Th.gM(:,:,k) = gM;
         ITRDB(j).RCP45.Th.PET_trend(:,k) = sum(PET)';
         ITRDB(j).RCP45.Th.M_trend(:,k) = mean(M)'; ITRDB(j).RCP45.Th.M_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP45.Th.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP45.Th.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
@@ -83,9 +86,6 @@ for j = 1:n
             ITRDB(j).Hg.T1,ITRDB(j).Hg.T2,...
             ITRDB(j).Hg.M1,ITRDB(j).Hg.M2,0,0,...
             Tmin(:,:,k), Tmax(:,:,k), Tdmean(:,:,k), P, coast, elev, 'pet_model','Hg', 'gT_0',gT);
-%         ITRDB(j).RCP45.Hg.PET(:,:,k) = PET;
-%         ITRDB(j).RCP45.Hg.M(:,:,k) = M;
-%         ITRDB(j).RCP45.Hg.gM(:,:,k) = gM;
         ITRDB(j).RCP45.Hg.PET_trend(:,k) = sum(PET)';
         ITRDB(j).RCP45.Hg.M_trend(:,k) = mean(M)'; ITRDB(j).RCP45.Hg.M_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP45.Hg.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP45.Hg.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
@@ -97,9 +97,6 @@ for j = 1:n
             ITRDB(j).PT.T1,ITRDB(j).PT.T2,...
             ITRDB(j).PT.M1,ITRDB(j).PT.M2,0,0,...
             Tmin(:,:,k), Tmax(:,:,k), Tdmean(:,:,k), P, coast, elev, 'pet_model','PT', 'gT_0',gT);
-%         ITRDB(j).RCP45.PT.PET(:,:,k) = PET;
-%         ITRDB(j).RCP45.PT.M(:,:,k) = M;
-%         ITRDB(j).RCP45.PT.gM(:,:,k) = gM;
         ITRDB(j).RCP45.PT.PET_trend(:,k) = sum(PET)';
         ITRDB(j).RCP45.PT.M_trend(:,k) = mean(M)'; ITRDB(j).RCP45.PT.M_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP45.PT.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP45.PT.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
@@ -111,9 +108,6 @@ for j = 1:n
             ITRDB(j).PM.T1,ITRDB(j).PM.T2,...
             ITRDB(j).PM.M1,ITRDB(j).PM.M2,0,0,...
             Tmin(:,:,k), Tmax(:,:,k), Tdmean(:,:,k), P, coast, elev, 'pet_model','PM', 'gT_0',gT);
-%         ITRDB(j).RCP45.PM.PET(:,:,k) = PET;
-%         ITRDB(j).RCP45.PM.M(:,:,k) = M;
-%         ITRDB(j).RCP45.PM.gM(:,:,k) = gM;
         ITRDB(j).RCP45.PM.PET_trend(:,k) = sum(PET)';
         ITRDB(j).RCP45.PM.M_trend(:,k) = mean(M)'; ITRDB(j).RCP45.PM.M_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP45.PM.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP45.PM.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
@@ -136,9 +130,6 @@ for j = 1:n
             ITRDB(j).Th.T1, ITRDB(j).Th.T2,...
             ITRDB(j).Th.M1, ITRDB(j).Th.M2,0,0,...
             Tmin(:,:,k), Tmax(:,:,k), Tdmean(:,:,k), P, coast, elev, 'pet_model','Th', 'gT_0',gT);
-%         ITRDB(j).RCP85.Th.PET(:,:,k) = PET;
-%         ITRDB(j).RCP85.Th.M(:,:,k) = M;
-%         ITRDB(j).RCP85.Th.gM(:,:,k) = gM;
         ITRDB(j).RCP85.Th.PET_trend(:,k) = sum(PET)';
         ITRDB(j).RCP85.Th.M_trend(:,k) = mean(M)'; ITRDB(j).RCP85.Th.M_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.Th.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.Th.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
@@ -150,9 +141,6 @@ for j = 1:n
             ITRDB(j).Hg.T1,ITRDB(j).Hg.T2,...
             ITRDB(j).Hg.M1,ITRDB(j).Hg.M2,0,0,...
             Tmin(:,:,k), Tmax(:,:,k), Tdmean(:,:,k), P, coast, elev, 'pet_model','Hg', 'gT_0',gT);
-%         ITRDB(j).RCP85.Hg.PET(:,:,k) = PET;
-%         ITRDB(j).RCP85.Hg.M(:,:,k) = M;
-%         ITRDB(j).RCP85.Hg.gM(:,:,k) = gM;
         ITRDB(j).RCP85.Hg.PET_trend(:,k) = sum(PET)';
         ITRDB(j).RCP85.Hg.M_trend(:,k) = mean(M)'; ITRDB(j).RCP85.Hg.M_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.Hg.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.Hg.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
@@ -164,9 +152,6 @@ for j = 1:n
             ITRDB(j).PT.T1,ITRDB(j).PT.T2,...
             ITRDB(j).PT.M1,ITRDB(j).PT.M2,0,0,...
             Tmin(:,:,k), Tmax(:,:,k), Tdmean(:,:,k), P, coast, elev, 'pet_model','PT', 'gT_0',gT);
-%         ITRDB(j).RCP85.PT.PET(:,:,k) = PET;
-%         ITRDB(j).RCP85.PT.M(:,:,k) = M;
-%         ITRDB(j).RCP85.PT.gM(:,:,k) = gM;
         ITRDB(j).RCP85.PT.PET_trend(:,k) = sum(PET)';
         ITRDB(j).RCP85.PT.M_trend(:,k) = mean(M)'; ITRDB(j).RCP85.PT.M_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.PT.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.PT.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
@@ -178,9 +163,6 @@ for j = 1:n
             ITRDB(j).PM.T1,ITRDB(j).PM.T2,...
             ITRDB(j).PM.M1,ITRDB(j).PM.M2,0,0,...
             Tmin(:,:,k), Tmax(:,:,k), Tdmean(:,:,k), P, coast, elev, 'pet_model','PM', 'gT_0',gT);
-%         ITRDB(j).RCP85.PM.PET(:,:,k) = PET;
-%         ITRDB(j).RCP85.PM.M(:,:,k) = M;
-%         ITRDB(j).RCP85.PM.gM(:,:,k) = gM;
         ITRDB(j).RCP85.PM.PET_trend(:,k) = sum(PET)';
         ITRDB(j).RCP85.PM.M_trend(:,k) = mean(M)'; ITRDB(j).RCP85.PM.M_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.PM.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.PM.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
