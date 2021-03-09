@@ -120,8 +120,11 @@ for j = 1:n
     models = ITRDB(j).RCP85.Models;
     Tmin = ITRDB(j).RCP85.Tmin;
     Tmax = ITRDB(j).RCP85.Tmax;
-    Tdmean = Tmin*mdl.Coefficients.Estimate(2) + mdl.Coefficients.Estimate(1);
-    Tdmean(Tdmean > Tmin) = Tmin(Tdmean > Tmin);
+    if a > 0
+        Tdmean = Tmin - a;
+    else
+        Tdmean = Tmin;
+    end
     
     % Loop through each model
     for k = 1:length(models)
@@ -135,6 +138,10 @@ for j = 1:n
         ITRDB(j).RCP85.Th.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.Th.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.Th.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010)); 
         ITRDB(j).RCP85.Th.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
+        test = ~isreal(ITRDB(j).RCP85.Th.TRW(:,k));
+        if ~isreal(ITRDB(j).RCP85.Th.TRW(:,k))
+            disp([ITRDB(j).SITE, ' - ',models{k}, ' - ', 'Thornthwaite']);
+        end
         
         % Hargreaves
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
@@ -146,7 +153,10 @@ for j = 1:n
         ITRDB(j).RCP85.Hg.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.Hg.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.Hg.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010)); 
         ITRDB(j).RCP85.Hg.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
-
+        if ~isreal(ITRDB(j).RCP85.Hg.TRW(:,k))
+            disp([ITRDB(j).SITE, ' - ',models{k}, ' - ', 'Hargreaves']);
+        end
+        
         % Priestley-Taylor
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
             ITRDB(j).PT.T1,ITRDB(j).PT.T2,...
@@ -157,6 +167,9 @@ for j = 1:n
         ITRDB(j).RCP85.PT.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.PT.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.PT.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010)); 
         ITRDB(j).RCP85.PT.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
+        if ~isreal(ITRDB(j).RCP85.PT.TRW(:,k))
+            disp([ITRDB(j).SITE, ' - ',models{k}, ' - ', 'Priestley-Taylor']);
+        end
 
         % Penman-Monteith
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
@@ -168,11 +181,14 @@ for j = 1:n
         ITRDB(j).RCP85.PM.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.PM.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.PM.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010));
         ITRDB(j).RCP85.PM.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
-        
+        if ~isreal(ITRDB(j).RCP85.PM.TRW(:,k))
+            disp([ITRDB(j).SITE, ' - ',models{k}, ' - ', 'Penman-Monteith']);
+        end
+
     end
     
 end
-clear coast DistDeg DistKM elev gM j m M ms mw n P PET phi rwi rwi_sim s T Tdmean Tmax Tmin w xind xy yind yr;
+clear a coast DistDeg DistKM elev gM j m M ms mw n P PET phi rwi rwi_sim s T Tdmean Tmax Tmin w xind xy yind yr;
 
 save('./output/ITRDB_projections.mat', 'ITRDB', '-v7.3');
 
