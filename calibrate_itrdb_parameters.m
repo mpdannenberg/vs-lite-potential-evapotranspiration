@@ -20,13 +20,14 @@ load ./data/ITRDB;
 ITRDB = ITRDB_TW;
 clear ITRDB_EW ITRDB_LWadj ITRDB_TW;
 ITRDB = ITRDB([ITRDB.LAT] > 28 & [ITRDB.LAT] <= 49 & [ITRDB.LON] > -125  & [ITRDB.LON] < -66);
-ITRDB(373:395) = []; % get rid of excess Canada
-ITRDB(656:673) = []; % get rid of excess Mexico
-ITRDB(1277) = []; % get rid of silly one
-ITRDB([ITRDB.END]>2017) = [];
+idx = cellfun(@(x) length(regexpi(x, '[a-zA-Z]')), {ITRDB.SITE});
+ITRDB = ITRDB(idx <= 3); clear idx;
+ITRDB([ITRDB.END]>2019) = [];
 ITRDB([ITRDB.END]<1980) = [];
 ITRDB([ITRDB.START]>1895) = [];
 ITRDB = ITRDB(~isnan([ITRDB.ELEV]));
+ITRDB = ITRDB(~isnan([ITRDB.LAT]));
+ITRDB = ITRDB(~isnan([ITRDB.LON]));
 
 %% Calibrate parameters - takes a LONG time (even with parallel processing)
 
@@ -55,85 +56,94 @@ for i = 1:n
     Tdmean = squeeze(tdmean.tdmean(yind, xind, :, :))';
     T = (Tmin+Tmax)/2;
     
-    [~,ia,ib] = intersect(cal_yrs,yr);
-    
-    % Thornthwaite
-    [T1,T2,M1,M2,T1dist,T2dist,M1dist,M2dist] = ...
-        estimate_vslite_params_v2_3(Tmin(:,ia),Tmax(:,ia),Tdmean(:,ia),P(:,ia),...
-        phi,coast,elev,rwi(ib)','pet_model','Th', 'pt_ests','mle', 'verbose',0);
-    
-    rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
-        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Th');
-    rwi_sim(1) = NaN;
-    
-    ITRDB(i).Th.VSLite = rwi_sim;
-    ITRDB(i).Th.T1 = T1;
-    ITRDB(i).Th.T2 = T2;
-    ITRDB(i).Th.M1 = M1;
-    ITRDB(i).Th.M2 = M2;
-    ITRDB(i).Th.T1dist = T1dist;
-    ITRDB(i).Th.T2dist = T2dist;
-    ITRDB(i).Th.M1dist = M1dist;
-    ITRDB(i).Th.M2dist = M2dist;
-    
-    % Hargreaves
-    [T1,T2,M1,M2,T1dist,T2dist,M1dist,M2dist] = ...
-        estimate_vslite_params_v2_3(Tmin(:,ia),Tmax(:,ia),Tdmean(:,ia),P(:,ia),...
-        phi,coast,elev,rwi(ib)','pet_model','Hg', 'pt_ests','mle', 'verbose',0);
-    
-    rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
-        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Hg');
-    rwi_sim(1) = NaN;
-    
-    ITRDB(i).Hg.VSLite = rwi_sim;
-    ITRDB(i).Hg.T1 = T1;
-    ITRDB(i).Hg.T2 = T2;
-    ITRDB(i).Hg.M1 = M1;
-    ITRDB(i).Hg.M2 = M2;
-    ITRDB(i).Hg.T1dist = T1dist;
-    ITRDB(i).Hg.T2dist = T2dist;
-    ITRDB(i).Hg.M1dist = M1dist;
-    ITRDB(i).Hg.M2dist = M2dist;
-    
-    % Priestley-Taylor
-    [T1,T2,M1,M2,T1dist,T2dist,M1dist,M2dist] = ...
-        estimate_vslite_params_v2_3(Tmin(:,ia),Tmax(:,ia),Tdmean(:,ia),P(:,ia),...
-        phi,coast,elev,rwi(ib)','pet_model','PT', 'pt_ests','mle', 'verbose',0);
-    
-    rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
-        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PT');
-    rwi_sim(1) = NaN;
-    
-    ITRDB(i).PT.VSLite = rwi_sim;
-    ITRDB(i).PT.T1 = T1;
-    ITRDB(i).PT.T2 = T2;
-    ITRDB(i).PT.M1 = M1;
-    ITRDB(i).PT.M2 = M2;
-    ITRDB(i).PT.T1dist = T1dist;
-    ITRDB(i).PT.T2dist = T2dist;
-    ITRDB(i).PT.M1dist = M1dist;
-    ITRDB(i).PT.M2dist = M2dist;
+    if sum(sum(~isnan(T))) > 0
+        [~,~,ia] = intersect(cal_yrs, year);
+        [~,~,ib] = intersect(cal_yrs, yr);
 
-    % Penman-Monteith
-    [T1,T2,M1,M2,T1dist,T2dist,M1dist,M2dist] = ...
-        estimate_vslite_params_v2_3(Tmin(:,ia),Tmax(:,ia),Tdmean(:,ia),P(:,ia),...
-        phi,coast,elev,rwi(ib)','pet_model','PM', 'pt_ests','mle', 'verbose',0);
-    
-    rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
-        Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PM');
-    rwi_sim(1) = NaN;
-    
-    ITRDB(i).PM.VSLite = rwi_sim;
-    ITRDB(i).PM.T1 = T1;
-    ITRDB(i).PM.T2 = T2;
-    ITRDB(i).PM.M1 = M1;
-    ITRDB(i).PM.M2 = M2;
-    ITRDB(i).PM.T1dist = T1dist;
-    ITRDB(i).PM.T2dist = T2dist;
-    ITRDB(i).PM.M1dist = M1dist;
-    ITRDB(i).PM.M2dist = M2dist;
+        % Thornthwaite
+        [T1,T2,M1,M2,T1dist,T2dist,M1dist,M2dist] = ...
+            estimate_vslite_params_v2_3(Tmin(:,ia),Tmax(:,ia),Tdmean(:,ia),P(:,ia),...
+            phi,coast,elev,rwi(ib)','pet_model','Th', 'pt_ests','mle', 'verbose',0,...
+            'nsamp',2500, 'nbi',500);
 
+        rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
+            Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Th');
+        rwi_sim(1) = NaN;
+
+        ITRDB(i).Th.VSLite = rwi_sim;
+        ITRDB(i).Th.T1 = T1;
+        ITRDB(i).Th.T2 = T2;
+        ITRDB(i).Th.M1 = M1;
+        ITRDB(i).Th.M2 = M2;
+        ITRDB(i).Th.T1dist = T1dist;
+        ITRDB(i).Th.T2dist = T2dist;
+        ITRDB(i).Th.M1dist = M1dist;
+        ITRDB(i).Th.M2dist = M2dist;
+
+        % Hargreaves
+        [T1,T2,M1,M2,T1dist,T2dist,M1dist,M2dist] = ...
+            estimate_vslite_params_v2_3(Tmin(:,ia),Tmax(:,ia),Tdmean(:,ia),P(:,ia),...
+            phi,coast,elev,rwi(ib)','pet_model','Hg', 'pt_ests','mle', 'verbose',0,...
+            'nsamp',2500, 'nbi',500);
+
+        rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
+            Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','Hg');
+        rwi_sim(1) = NaN;
+
+        ITRDB(i).Hg.VSLite = rwi_sim;
+        ITRDB(i).Hg.T1 = T1;
+        ITRDB(i).Hg.T2 = T2;
+        ITRDB(i).Hg.M1 = M1;
+        ITRDB(i).Hg.M2 = M2;
+        ITRDB(i).Hg.T1dist = T1dist;
+        ITRDB(i).Hg.T2dist = T2dist;
+        ITRDB(i).Hg.M1dist = M1dist;
+        ITRDB(i).Hg.M2dist = M2dist;
+
+        % Priestley-Taylor
+        [T1,T2,M1,M2,T1dist,T2dist,M1dist,M2dist] = ...
+            estimate_vslite_params_v2_3(Tmin(:,ia),Tmax(:,ia),Tdmean(:,ia),P(:,ia),...
+            phi,coast,elev,rwi(ib)','pet_model','PT', 'pt_ests','mle', 'verbose',0,...
+            'nsamp',2500, 'nbi',500);
+
+        rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
+            Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PT');
+        rwi_sim(1) = NaN;
+
+        ITRDB(i).PT.VSLite = rwi_sim;
+        ITRDB(i).PT.T1 = T1;
+        ITRDB(i).PT.T2 = T2;
+        ITRDB(i).PT.M1 = M1;
+        ITRDB(i).PT.M2 = M2;
+        ITRDB(i).PT.T1dist = T1dist;
+        ITRDB(i).PT.T2dist = T2dist;
+        ITRDB(i).PT.M1dist = M1dist;
+        ITRDB(i).PT.M2dist = M2dist;
+
+        % Penman-Monteith
+        [T1,T2,M1,M2,T1dist,T2dist,M1dist,M2dist] = ...
+            estimate_vslite_params_v2_3(Tmin(:,ia),Tmax(:,ia),Tdmean(:,ia),P(:,ia),...
+            phi,coast,elev,rwi(ib)','pet_model','PM', 'pt_ests','mle', 'verbose',0,...
+            'nsamp',2500, 'nbi',500);
+
+        rwi_sim = VSLite_v2_3(syear, eyear, phi, T1,T2,M1,M2,0,0,...
+            Tmin,Tmax,Tdmean,P,coast,elev, 'pet_model','PM');
+        rwi_sim(1) = NaN;
+
+        ITRDB(i).PM.VSLite = rwi_sim;
+        ITRDB(i).PM.T1 = T1;
+        ITRDB(i).PM.T2 = T2;
+        ITRDB(i).PM.M1 = M1;
+        ITRDB(i).PM.M2 = M2;
+        ITRDB(i).PM.T1dist = T1dist;
+        ITRDB(i).PM.T2dist = T2dist;
+        ITRDB(i).PM.M1dist = M1dist;
+        ITRDB(i).PM.M2dist = M2dist;
+    end
 end
+
+idx = ~cellfun(@isempty, {ITRDB.Th});
+ITRDB = ITRDB(idx);
 
 save('./data/ITRDB_vslite.mat','ITRDB','syear','eyear','cal_yrs');
 
