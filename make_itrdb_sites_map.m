@@ -80,7 +80,7 @@ subplot(3,3,7:9)
 [B,I] = sort(nSpc, 'descend');
 bar(B(B>nt), 'FaceColor',[0.8 0.8 0.8]);
 box off;
-set(gca, 'YLim',[0 180], 'XTick',1:length(B(B>nt)), 'TickDir','out',...
+set(gca, 'YLim',[0 200], 'XTick',1:length(B(B>nt)), 'TickDir','out',...
     'XTickLabels',unSpc(I(B>nt)), 'XTickLabelRotation',90, 'FontSize',9,...
     'XLim',[0 length(B(B>nt))+1]);
 ylabel('\itN', 'Rotation',0, 'HorizontalAlignment','right', 'VerticalAlignment','middle')
@@ -89,13 +89,6 @@ ax.Position(1) = 0.1;
 ax.Position(2) = 0.12;
 ax.Position(3) = 0.85;
 ax.Position(4) = 0.28;
-
-% text(14,80,...
-%     {'{\bfSpecies with {\itN}<5:} ABAM, ABBA, ACSH, BELE, CADE, CHLA, CYGL, ';
-%     'CYOV, FAGR, FRNI, JUOS, JUSC, JUSE, LALA, LAOC, LIDE, PCPU, ';
-%     'PCRU, PIAR, PIMR, PIPN, PIRI, PISF, PISP, PIVI, PLRA, PPDE, ';
-%     'QUCF, QUCO, QUFA, QULO, QULY, QUMU, QUSH, QUSP, TSHE'}, ...
-%     'FontSize',7);
 
 text(-3, 180, 'b', 'FontSize',12);
 
