@@ -41,7 +41,7 @@ lat = [ITRDB.LAT];
 lon = [ITRDB.LON];
 
 clr = wesanderson('fantasticfox1');
-clr = make_cmap([1 1 1; clr(3,:); clr(3,:).^2; clr(3,:).^4], 7);
+clr = make_cmap([1 1 1; clr(3,:).^1.5; clr(3,:).^4; clr(3,:).^8], 7);
 
 % Thornthwaite
 r2 = [ITRDB.Th];
