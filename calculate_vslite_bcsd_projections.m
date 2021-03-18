@@ -80,6 +80,7 @@ for j = 1:n
         ITRDB(j).RCP45.Th.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP45.Th.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP45.Th.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010)); 
         ITRDB(j).RCP45.Th.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
+        ITRDB(j).RCP45.Th.gM(:,:,k) = gM;
         
         % Hargreaves
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
@@ -91,7 +92,8 @@ for j = 1:n
         ITRDB(j).RCP45.Hg.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP45.Hg.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP45.Hg.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010)); 
         ITRDB(j).RCP45.Hg.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
-
+        ITRDB(j).RCP45.Hg.gM(:,:,k) = gM;
+        
         % Priestley-Taylor
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
             ITRDB(j).PT.T1,ITRDB(j).PT.T2,...
@@ -102,7 +104,8 @@ for j = 1:n
         ITRDB(j).RCP45.PT.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP45.PT.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP45.PT.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010)); 
         ITRDB(j).RCP45.PT.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
-
+        ITRDB(j).RCP45.PT.gM(:,:,k) = gM;
+        
         % Penman-Monteith
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
             ITRDB(j).PM.T1,ITRDB(j).PM.T2,...
@@ -113,6 +116,7 @@ for j = 1:n
         ITRDB(j).RCP45.PM.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP45.PM.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP45.PM.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010));
         ITRDB(j).RCP45.PM.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
+        ITRDB(j).RCP45.PM.gM(:,:,k) = gM;
         
     end
     
@@ -138,6 +142,7 @@ for j = 1:n
         ITRDB(j).RCP85.Th.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.Th.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.Th.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010)); 
         ITRDB(j).RCP85.Th.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
+        ITRDB(j).RCP85.Th.gM(:,:,k) = gM;
         test = ~isreal(ITRDB(j).RCP85.Th.TRW(:,k));
         if ~isreal(ITRDB(j).RCP85.Th.TRW(:,k))
             disp([ITRDB(j).SITE, ' - ',models{k}, ' - ', 'Thornthwaite']);
@@ -153,6 +158,7 @@ for j = 1:n
         ITRDB(j).RCP85.Hg.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.Hg.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.Hg.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010)); 
         ITRDB(j).RCP85.Hg.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
+        ITRDB(j).RCP85.Hg.gM(:,:,k) = gM;
         if ~isreal(ITRDB(j).RCP85.Hg.TRW(:,k))
             disp([ITRDB(j).SITE, ' - ',models{k}, ' - ', 'Hargreaves']);
         end
@@ -167,6 +173,7 @@ for j = 1:n
         ITRDB(j).RCP85.PT.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.PT.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.PT.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010)); 
         ITRDB(j).RCP85.PT.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
+        ITRDB(j).RCP85.PT.gM(:,:,k) = gM;
         if ~isreal(ITRDB(j).RCP85.PT.TRW(:,k))
             disp([ITRDB(j).SITE, ' - ',models{k}, ' - ', 'Priestley-Taylor']);
         end
@@ -181,6 +188,7 @@ for j = 1:n
         ITRDB(j).RCP85.PM.gM_trend(:,k) = mean(gM)'; ITRDB(j).RCP85.PM.gM_trend(1,k) = NaN; % Exclude first value since it hasn't equilibrated
         ITRDB(j).RCP85.PM.TRW(:,k) = width / mean(width(bcsd_year>=1981 & bcsd_year<=2010));
         ITRDB(j).RCP85.PM.TRW(1,k) = NaN; % Exclude first value since it hasn't equilibrated
+        ITRDB(j).RCP85.PM.gM(:,:,k) = gM;
         if ~isreal(ITRDB(j).RCP85.PM.TRW(:,k))
             disp([ITRDB(j).SITE, ' - ',models{k}, ' - ', 'Penman-Monteith']);
         end
