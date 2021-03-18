@@ -51,12 +51,13 @@ for j = 1:n
     Tdmean = reshape(squeeze(tdmean.tdmean(yind, xind, :, :))', [], 1);
     a = nanmean(Tmin-Tdmean);
     
-    % Get 1981-2010 mean precip and gT from observations (these are
+    % Get 1981-2010 mean precip from observations (this is 
     % controlled in model simulations to isolate just the effect of
-    % temperature on PET, M, gM, and growth
+    % temperature on PET, M, gM, and growth - gT is also controlled at
+    % 1981-2010 levels (in the for loop below because it differs slightly
+    % for each PET model)
     P = squeeze(ppt.PPT(yind, xind, :, :))';
     P = repmat(nanmean(P(:, year>=1981 & year<=2010), 2), 1, length(syear:eyear));
-    gT = repmat(ITRDB(j).Th.Tplus0.gTseas', 1, length(syear:eyear));
     
     % Get RCP4.5 projections
     models = ITRDB(j).RCP45.Models;
@@ -71,6 +72,7 @@ for j = 1:n
     % Loop through each model
     for k = 1:length(models)
         % Thornthwaite
+        gT = repmat(ITRDB(j).Th.Tplus0.gTseas', 1, length(syear:eyear));
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
             ITRDB(j).Th.T1, ITRDB(j).Th.T2,...
             ITRDB(j).Th.M1, ITRDB(j).Th.M2,0,0,...
@@ -83,6 +85,7 @@ for j = 1:n
         ITRDB(j).RCP45.Th.gM(:,:,k) = gM;
         
         % Hargreaves
+        gT = repmat(ITRDB(j).Hg.Tplus0.gTseas', 1, length(syear:eyear));
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
             ITRDB(j).Hg.T1,ITRDB(j).Hg.T2,...
             ITRDB(j).Hg.M1,ITRDB(j).Hg.M2,0,0,...
@@ -95,6 +98,7 @@ for j = 1:n
         ITRDB(j).RCP45.Hg.gM(:,:,k) = gM;
         
         % Priestley-Taylor
+        gT = repmat(ITRDB(j).PT.Tplus0.gTseas', 1, length(syear:eyear));
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
             ITRDB(j).PT.T1,ITRDB(j).PT.T2,...
             ITRDB(j).PT.M1,ITRDB(j).PT.M2,0,0,...
@@ -107,6 +111,7 @@ for j = 1:n
         ITRDB(j).RCP45.PT.gM(:,:,k) = gM;
         
         % Penman-Monteith
+        gT = repmat(ITRDB(j).PM.Tplus0.gTseas', 1, length(syear:eyear));
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
             ITRDB(j).PM.T1,ITRDB(j).PM.T2,...
             ITRDB(j).PM.M1,ITRDB(j).PM.M2,0,0,...
@@ -133,6 +138,7 @@ for j = 1:n
     % Loop through each model
     for k = 1:length(models)
         % Thornthwaite
+        gT = repmat(ITRDB(j).Th.Tplus0.gTseas', 1, length(syear:eyear));
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
             ITRDB(j).Th.T1, ITRDB(j).Th.T2,...
             ITRDB(j).Th.M1, ITRDB(j).Th.M2,0,0,...
@@ -149,6 +155,7 @@ for j = 1:n
         end
         
         % Hargreaves
+        gT = repmat(ITRDB(j).Hg.Tplus0.gTseas', 1, length(syear:eyear));
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
             ITRDB(j).Hg.T1,ITRDB(j).Hg.T2,...
             ITRDB(j).Hg.M1,ITRDB(j).Hg.M2,0,0,...
@@ -164,6 +171,7 @@ for j = 1:n
         end
         
         % Priestley-Taylor
+        gT = repmat(ITRDB(j).PT.Tplus0.gTseas', 1, length(syear:eyear));
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
             ITRDB(j).PT.T1,ITRDB(j).PT.T2,...
             ITRDB(j).PT.M1,ITRDB(j).PT.M2,0,0,...
@@ -179,6 +187,7 @@ for j = 1:n
         end
 
         % Penman-Monteith
+        gT = repmat(ITRDB(j).PM.Tplus0.gTseas', 1, length(syear:eyear));
         [~,~,gM,~,~,M,PET,width] = VSLite_v2_3(syear, eyear, phi,...
             ITRDB(j).PM.T1,ITRDB(j).PM.T2,...
             ITRDB(j).PM.M1,ITRDB(j).PM.M2,0,0,...
