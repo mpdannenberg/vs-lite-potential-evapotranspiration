@@ -71,17 +71,6 @@ for i = 1:n
     ITRDB(i).Th.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).Th.Tplus0.gTseas = mean(gT(:,year>=1981 & year<=2010), 2)';
     
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
-        ITRDB(i).Th.T1,ITRDB(i).Th.T2,...
-        ITRDB(i).Th.M1,ITRDB(i).Th.M2,0,0,...
-        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','Th', 'gT_0',gT);
-    ITRDB(i).Th.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).Th.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).Th.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).Th.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
-    ITRDB(i).Th.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
-    ITRDB(i).Th.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
-    
     % Hargreaves
     [~,gT,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).Hg.T1,ITRDB(i).Hg.T2,...
@@ -95,17 +84,6 @@ for i = 1:n
     ITRDB(i).Hg.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).Hg.Tplus0.gTseas = mean(gT(:,year>=1981 & year<=2010), 2)';
     
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
-        ITRDB(i).Hg.T1,ITRDB(i).Hg.T2,...
-        ITRDB(i).Hg.M1,ITRDB(i).Hg.M2,0,0,...
-        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','Hg', 'gT_0',gT);
-    ITRDB(i).Hg.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).Hg.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).Hg.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).Hg.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
-    ITRDB(i).Hg.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
-    ITRDB(i).Hg.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
-    
     % Priestley-Taylor
     [~,gT,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PT.T1,ITRDB(i).PT.T2,...
@@ -118,18 +96,7 @@ for i = 1:n
     ITRDB(i).PT.Tplus0.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PT.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PT.Tplus0.gTseas = mean(gT(:,year>=1981 & year<=2010), 2)';
-    
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
-        ITRDB(i).PT.T1,ITRDB(i).PT.T2,...
-        ITRDB(i).PT.M1,ITRDB(i).PT.M2,0,0,...
-        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','PT', 'gT_0',gT);
-    ITRDB(i).PT.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).PT.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).PT.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).PT.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
-    ITRDB(i).PT.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
-    ITRDB(i).PT.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
-    
+        
     % Penman-Monteith
     [~,gT,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
         ITRDB(i).PM.T1,ITRDB(i).PM.T2,...
@@ -142,17 +109,6 @@ for i = 1:n
     ITRDB(i).PM.Tplus0.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PM.Tplus0.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     ITRDB(i).PM.Tplus0.gTseas = mean(gT(:,year>=1981 & year<=2010), 2)';
-    
-    [~,~,gM,~,~,M,PET,~] = VSLite_v2_3(syear, eyear, phi,...
-        ITRDB(i).PM.T1,ITRDB(i).PM.T2,...
-        ITRDB(i).PM.M1,ITRDB(i).PM.M2,0,0,...
-        Tmin+2,Tmax+2,Tdmean+2,P,coast,elev, 'pet_model','PM', 'gT_0',gT);
-    ITRDB(i).PM.Tplus2.gM = mean(reshape(gM(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).PM.Tplus2.M = mean(reshape(M(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).PM.Tplus2.PET = mean(reshape(PET(:,year>=1981 & year<=2010), 1,[]));
-    ITRDB(i).PM.Tplus2.gMseas = mean(gM(:,year>=1981 & year<=2010), 2)';
-    ITRDB(i).PM.Tplus2.Mseas = mean(M(:,year>=1981 & year<=2010), 2)';
-    ITRDB(i).PM.Tplus2.PETseas = mean(PET(:,year>=1981 & year<=2010), 2)';
     
 end
 clear coast DistDeg DistKM elev gM i m M ms mw n P PET phi rwi rwi_sim s T Tdmean Tmax Tmin w xind xy yind yr;
