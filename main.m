@@ -1,9 +1,5 @@
 % Main file
 
-% Data/Methods figures
-make_itrdb_sites_map;
-make_vslite_conceptual_figure;
-
 % Calibrate VS-Lite parameters (takes a long time... a few hours)
 calibrate_itrdb_parameters;
 
@@ -22,4 +18,8 @@ calculate_vslite_bcsd_projections;
 plot_vslite_bcsd_projections; 
 supplemental_plot_vslite_bcsd_projections_rcp45; 
 plot_vslite_bcsd_gM_trajectory;
+
+% Data/Methods figures
+make_itrdb_sites_map;
+make_vslite_conceptual_figure;
 
