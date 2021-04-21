@@ -19,7 +19,7 @@ cal_yrs = syear:1960;
 load ./data/ITRDB;
 ITRDB = ITRDB_TW;
 clear ITRDB_EW ITRDB_LWadj ITRDB_TW;
-ITRDB = ITRDB([ITRDB.LAT] > 28 & [ITRDB.LAT] <= 49 & [ITRDB.LON] > -125  & [ITRDB.LON] < -66);
+ITRDB = ITRDB([ITRDB.LAT] > 25 & [ITRDB.LAT] <= 49.5 & [ITRDB.LON] > -125  & [ITRDB.LON] < -66);
 idx = cellfun(@(x) length(regexpi(x, '[a-zA-Z]')), {ITRDB.SITE});
 ITRDB = ITRDB(idx <= 3); clear idx;
 ITRDB([ITRDB.END]>2019) = [];
