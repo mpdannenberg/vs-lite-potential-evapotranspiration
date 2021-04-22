@@ -1,4 +1,4 @@
-% Simulate effect of +2C
+% Run calibrated model with observed climate
 
 load ./data/ITRDB_vslite;
 
@@ -34,7 +34,10 @@ for i = 1:length(ecoL3)
 end
 clear IN ON ecoL3;
 
-%% Get monthly climatology and simulate +2 and +4 C
+ecol1 = cellfun(@str2num, {ITRDB.EcoL1_Code});
+ITRDB = ITRDB(ecol1 > 0);
+
+%% Get monthly climate, run model, and calculate climatological means
 
 n = length(ITRDB);
 COAST = geotiffread('./data/us_CoastalBoundary_4km.tif');
