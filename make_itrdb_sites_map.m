@@ -19,6 +19,8 @@ for i = 1:length(ecoL3)
 end
 clear IN ON ecoL3 i;
 ITRDB = ITRDB(~cellfun(@isempty,{ITRDB.EcoL1_Code}));
+ecol1 = cellfun(@str2num, {ITRDB.EcoL1_Code});
+ITRDB = ITRDB(ecol1 > 0);
 
 load ./data/conus_mask;
 ecol1 = double(geotiffread('./data/us_EcoL1_4km.tif'));
