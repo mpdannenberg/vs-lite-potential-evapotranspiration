@@ -25,6 +25,8 @@ idx = ~cellfun(@isempty, {ITRDB.EcoL1_Code});
 
 ITRDB = ITRDB(idx);
 ecol1 = cellfun(@str2num, {ITRDB.EcoL1_Code});
+ITRDB = ITRDB(ecol1 > 0);
+ecol1 = cellfun(@str2num, {ITRDB.EcoL1_Code});
 ecos = sort(unique(ecol1));
 
 %% Make figure
