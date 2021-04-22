@@ -156,7 +156,7 @@ for i = 1:length(ecos)
     
 end
 set(gcf,'PaperPositionMode','auto')
-print('-dtiff','-f1','-r300','./output/bcsd-trend-gM.tif')
+print('-dtiff','-f1','-r300','./output/supplemental-bcsd-trend-gM-rcp85.tif')
 close all;
 
 %% Trend in soil moisture
@@ -233,7 +233,7 @@ for i = 1:length(ecos)
     
 end
 set(gcf,'PaperPositionMode','auto')
-print('-dtiff','-f1','-r300','./output/bcsd-trend-soilmoisture.tif')
+print('-dtiff','-f1','-r300','./output/supplemental-bcsd-trend-soilmoisture-rcp85.tif')
 close all;
 
 %% Trend in PET
