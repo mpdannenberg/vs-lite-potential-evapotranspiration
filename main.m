@@ -24,3 +24,7 @@ plot_vslite_bcsd_gM_trajectory;
 make_itrdb_sites_map;
 make_vslite_conceptual_figure;
 
+% Supplemental figures
+supplemental_compare_vslite_smap_soilmoisture;
+supplemental_map_vslite_parameters;
+
