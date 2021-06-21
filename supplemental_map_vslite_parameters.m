@@ -67,7 +67,7 @@ title('Hargreaves', 'FontSize',12);
 ax = gca;
 ax.Position(1) = 0.55;
 
-% Priestly-Taylor
+% Priestley-Taylor
 r2 = [ITRDB.PT];
 r2 = [r2.M1];
 subplot(3,18,19:27)
@@ -84,7 +84,7 @@ caxis([0 0.1]);
 colormap(clr);
 subplotsqueeze(gca, 1.1)
 text(-0.38,0.86,'c', 'FontSize',12)
-title('Priestly-Taylor', 'FontSize',12);
+title('Priestley-Taylor', 'FontSize',12);
 ax = gca;
 ax.Position(1) = 0.05;
 
@@ -170,7 +170,7 @@ for iH = 1:length(h)
     h(iH).MarkerEdgeColor = 'k';
 end    
 
-hLegend = legend(findall(gca,'Tag','Box'), {'Penman-Monteith','Priestly-Taylor','Hargreaves','Thornthwaite'}, 'Orientation','horizontal');
+hLegend = legend(findall(gca,'Tag','Box'), {'Penman-Monteith','Priestley-Taylor','Hargreaves','Thornthwaite'}, 'Orientation','horizontal');
 hLegend.Position = [0.14    0.27    0.7179    0.0253];
 hLegend.FontSize = 10;
 legend('boxoff')
@@ -229,7 +229,7 @@ title('Hargreaves', 'FontSize',12);
 ax = gca;
 ax.Position(1) = 0.55;
 
-% Priestly-Taylor
+% Priestley-Taylor
 r2 = [ITRDB.PT];
 r2 = [r2.M2];
 subplot(3,18,19:27)
@@ -246,7 +246,7 @@ caxis([0.15 0.5]);
 colormap(clr);
 subplotsqueeze(gca, 1.1)
 text(-0.38,0.86,'c', 'FontSize',12)
-title('Priestly-Taylor', 'FontSize',12);
+title('Priestley-Taylor', 'FontSize',12);
 ax = gca;
 ax.Position(1) = 0.05;
 
@@ -332,7 +332,7 @@ for iH = 1:length(h)
     h(iH).MarkerEdgeColor = 'k';
 end    
 
-hLegend = legend(findall(gca,'Tag','Box'), {'Penman-Monteith','Priestly-Taylor','Hargreaves','Thornthwaite'}, 'Orientation','horizontal');
+hLegend = legend(findall(gca,'Tag','Box'), {'Penman-Monteith','Priestley-Taylor','Hargreaves','Thornthwaite'}, 'Orientation','horizontal');
 hLegend.Position = [0.14    0.27    0.7179    0.0253];
 hLegend.FontSize = 10;
 legend('boxoff')
