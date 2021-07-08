@@ -8,16 +8,22 @@ Dannenberg, M. P. (2021), Modeling tree radial growth in a warming climate: Wher
 Process-based models of tree-ring width are used both for reconstructing past climates and for projecting changes in growth due to climate change. Since soil moisture observations are unavailable at appropriate spatial and temporal scales, these models generally rely on simple water budgets driven in part by temperature-based potential evapotranspiration (PET) estimates, but the choice of PET model could have large effects on simulated soil moisture, moisture stress, and radial growth. Here, I use four different PET models to drive the VS-Lite model and evaluate the extent to which they differ in both their ability to replicate observed growth variability and their simulated responses to projected 21st century warming. Across more than 1,200 tree-ring width chronologies in the conterminous United States, there were no significant differences among the four PET models in their ability to replicate observed radial growth, but the models differed in their responses to 21st century warming. The temperature-driven empirical PET models (Thornthwaite and Hargreaves) simulated much larger warming-induced increases in PET and decreases in soil moisture than the more physically realistic PET models (Priestley-Taylor and Penman-Monteith). In cooler and more mesic regions with relatively minimal moisture constraints to growth, the models simulated similarly small reductions in growth with increased warming. However, in dry regions, the Thornthwaite- and Hargreaves-driven VS-Lite models simulated an increase in moisture stress roughly double that of the Priestley-Taylor and Penman-Monteith models, which also translated to larger simulated declines in radial growth under warming. While the lack of difference in the models’ ability to replicate observed radial growth variability is an encouraging sign for some applications (e.g., attributing changes in growth to specific climatic drivers), the large differences in model responses to warming suggest that caution is needed when applying the temperature-driven PET models to climatic conditions with large trends in temperature.
 
 ## VS-Lite functions
-###VS-Lite's functions were modified from version 2.3 of those provided by Susan Tolwinski-Ward (Tolwinski-Ward et al., 2011, 2013, 2014) at https://www.ncdc.noaa.gov/paleo-search/study/9894. These functions include:
+### VS-Lite's functions were modified from version 2.3 of those provided by Susan Tolwinski-Ward (Tolwinski-Ward et al., 2011, 2013, 2014) at https://www.ncdc.noaa.gov/paleo-search/study/9894. These functions include:
 Compute_gE.m: Computes the solar energy scalar (unmodified from version 2.3)
+
 estimate_vslite_params_v3.m: Bayesian calibration of VS-Lite parameters (modified from version 2.3 to allow optional switches for other PET methods)
+
 leakybucket_monthly.m: Calculate monthly "leaky bucket" soil moisture without daily substepping (modified from version 2.3 to allow optional switches for other PET methods)
+
 leakybucket_submonthly.m: Calculate monthly "leaky bucket" soil moisture with daily substepping (modified from version 2.3 to allow optional switches for other PET methods)
+
 VSLite_v3.m: Run VS-Lite model (modified from version 2.3 to allow optional switches for other PET methods)
 
 ## PET functions
 fao_pm.m: Computes PET with the simplified FAO-56 Penman-Monteith method (Allen et al., 1998)
+
 hargreaves.m: Computes PET with the Hargreaves method (Hargreaves & Samani, 1985; Hargreaves & Allen, 2003)
+
 priestley_taylor.m: Computes PET with the Priestley-Taylor method (Priestley & Taylor, 1972)
 
 ## Analysis scripts
